@@ -41,7 +41,7 @@ export class View {
 
 	onPurchaseTabButtonClicked() {
 		$(SELECTOR.PURCHASE_MENU).addEventListener('click', () => {
-			console.log(33);
+			this.renderPurchaseTab();
 		});
 	}
 
@@ -57,6 +57,13 @@ export class View {
 		$machineTab.innerHTML = TEMPLATES.MACHINE_MENU;
 		this.clearContentsArea();
 		$(SELECTOR.CONTENTS_AREA).appendChild($machineTab);
+	}
+
+	renderPurchaseTab() {
+		const $purchaseTab = document.createElement('div');
+		$purchaseTab.innerHTML = TEMPLATES.PURCHASE_MENU;
+		this.clearContentsArea();
+		$(SELECTOR.CONTENTS_AREA).appendChild($purchaseTab);
 	}
 
 	clearContentsArea() {
