@@ -1,6 +1,5 @@
 import { $ } from '../utils/utils.js';
-import { TEMPLATES } from './templates.js';
-import { SELECTOR } from './selectors.js';
+import { SELECTOR, TEMPLATES } from './viewConstans.js';
 
 export class View {
 	constructor() {
