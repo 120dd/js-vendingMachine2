@@ -4,11 +4,8 @@ import { TEMPLATES } from './templates.js';
 
 export class View {
 	constructor() {
-		this.init();
-	}
-
-	init() {
 		this.renderHeader();
+		this.registerTabsClicked();
 		this.createContentsArea();
 	}
 
@@ -16,7 +13,6 @@ export class View {
 		const $header = document.createElement('header');
 		$header.innerHTML = TEMPLATES.HEADER;
 		$(SELECTOR.APP).appendChild($header);
-		this.registerTabClicked();
 	}
 
 	createContentsArea() {
@@ -25,7 +21,7 @@ export class View {
 		$(SELECTOR.APP).appendChild($contentsArea);
 	}
 
-	registerTabClicked() {
+	registerTabsClicked() {
 		this.onProductTabButtonClicked();
 		this.onMachineTabClicked();
 		this.onPurchaseTabButtonClicked();
