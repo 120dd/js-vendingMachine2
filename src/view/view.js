@@ -3,6 +3,11 @@ import { SELECTOR, TEMPLATES } from './viewConstans.js';
 
 export class View {
 	constructor() {
+		this.$header = this.createElement('header', TEMPLATES.HEADER);
+		this.$contentsArea = this.createElement('div');
+		this.$productTab = this.createElement('div', TEMPLATES.PRODUCT_MENU);
+		this.$machineTab = this.createElement('div', TEMPLATES.MACHINE_MENU);
+		this.$purchaseTab = this.createElement('div', TEMPLATES.PURCHASE_MENU);
 		this.renderHeader();
 		this.registerProductTabButtonClicked();
 		this.registerMachineTabClicked();
@@ -11,15 +16,18 @@ export class View {
 	}
 
 	renderHeader() {
-		const $header = document.createElement('header');
-		$header.innerHTML = TEMPLATES.HEADER;
-		$(SELECTOR.APP).appendChild($header);
+		$(SELECTOR.APP).appendChild(this.$header);
+	}
+
+	createElement(tagName, innerHtml) {
+		const newElement = document.createElement(tagName);
+		newElement.innerHTML = innerHtml;
+		return newElement;
 	}
 
 	createContentsArea() {
-		const $contentsArea = document.createElement('div');
-		$contentsArea.setAttribute('id', 'contents-area');
-		$(SELECTOR.APP).appendChild($contentsArea);
+		this.$contentsArea.setAttribute('id', 'contents-area');
+		$(SELECTOR.APP).appendChild(this.$contentsArea);
 	}
 
 	registerProductTabButtonClicked() {
@@ -41,24 +49,18 @@ export class View {
 	}
 
 	renderProductTab() {
-		const $productTab = document.createElement('div');
-		$productTab.innerHTML = TEMPLATES.PRODUCT_MENU;
 		this.clearContentsArea();
-		$(SELECTOR.CONTENTS_AREA).appendChild($productTab);
+		$(SELECTOR.CONTENTS_AREA).appendChild(this.$productTab);
 	}
 
 	renderMachineTab() {
-		const $machineTab = document.createElement('div');
-		$machineTab.innerHTML = TEMPLATES.MACHINE_MENU;
 		this.clearContentsArea();
-		$(SELECTOR.CONTENTS_AREA).appendChild($machineTab);
+		$(SELECTOR.CONTENTS_AREA).appendChild(this.$machineTab);
 	}
 
 	renderPurchaseTab() {
-		const $purchaseTab = document.createElement('div');
-		$purchaseTab.innerHTML = TEMPLATES.PURCHASE_MENU;
 		this.clearContentsArea();
-		$(SELECTOR.CONTENTS_AREA).appendChild($purchaseTab);
+		$(SELECTOR.CONTENTS_AREA).appendChild(this.$purchaseTab);
 	}
 
 	clearContentsArea() {
