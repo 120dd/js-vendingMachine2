@@ -4,7 +4,9 @@ import { SELECTOR, TEMPLATES } from './viewConstans.js';
 export class View {
 	constructor() {
 		this.renderHeader();
-		this.registerTabsClicked();
+		this.registerProductTabButtonClicked();
+		this.registerMachineTabClicked();
+		this.registerPurchaseTabButtonClicked();
 		this.createContentsArea();
 	}
 
@@ -20,25 +22,19 @@ export class View {
 		$(SELECTOR.APP).appendChild($contentsArea);
 	}
 
-	registerTabsClicked() {
-		this.onProductTabButtonClicked();
-		this.onMachineTabClicked();
-		this.onPurchaseTabButtonClicked();
-	}
-
-	onProductTabButtonClicked() {
+	registerProductTabButtonClicked() {
 		$(SELECTOR.PRODUCT_MENU).addEventListener('click', () => {
 			this.renderProductTab();
 		});
 	}
 
-	onMachineTabClicked() {
+	registerMachineTabClicked() {
 		$(SELECTOR.COIN_MENU).addEventListener('click', () => {
 			this.renderMachineTab();
 		});
 	}
 
-	onPurchaseTabButtonClicked() {
+	registerPurchaseTabButtonClicked() {
 		$(SELECTOR.PURCHASE_MENU).addEventListener('click', () => {
 			this.renderPurchaseTab();
 		});
