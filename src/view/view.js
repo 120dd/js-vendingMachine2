@@ -8,15 +8,38 @@ export class View {
 		this.$productTab = this.createElement('div', TEMPLATES.PRODUCT_MENU);
 		this.$machineTab = this.createElement('div', TEMPLATES.MACHINE_MENU);
 		this.$purchaseTab = this.createElement('div', TEMPLATES.PURCHASE_MENU);
-		this.renderHeader();
-		this.registerProductTabButtonClicked();
-		this.registerMachineTabClicked();
-		this.registerPurchaseTabButtonClicked();
-		this.createContentsArea();
+
+		this.initUi();
+		this.initHandlers();
 	}
 
-	renderHeader() {
+	initUi() {
+		// header
 		$(SELECTOR.APP).appendChild(this.$header);
+
+		// tab area
+		this.createTabArea();
+		this.$contentsArea.setAttribute('id', 'contents-area');
+		$(SELECTOR.APP).appendChild(this.$contentsArea);
+	}
+
+	initHandlers() {
+		$(SELECTOR.PRODUCT_MENU).addEventListener('click', () => {
+			this.renderTab(this.$productTab);
+		});
+
+		$(SELECTOR.COIN_MENU).addEventListener('click', () => {
+			this.renderTab(this.$machineTab);
+		});
+
+		$(SELECTOR.PURCHASE_MENU).addEventListener('click', () => {
+			this.renderTab(this.$purchaseTab);
+		});
+	}
+
+	renderTab(tab) {
+		this.clearTabArea();
+		$(SELECTOR.CONTENTS_AREA).appendChild(tab);
 	}
 
 	createElement(tagName, innerHtml) {
@@ -25,35 +48,12 @@ export class View {
 		return newElement;
 	}
 
-	createContentsArea() {
+	createTabArea() {
 		this.$contentsArea.setAttribute('id', 'contents-area');
 		$(SELECTOR.APP).appendChild(this.$contentsArea);
 	}
 
-	registerProductTabButtonClicked() {
-		$(SELECTOR.PRODUCT_MENU).addEventListener('click', () => {
-			this.renderTab(this.$productTab);
-		});
-	}
-
-	registerMachineTabClicked() {
-		$(SELECTOR.COIN_MENU).addEventListener('click', () => {
-			this.renderTab(this.$machineTab);
-		});
-	}
-
-	registerPurchaseTabButtonClicked() {
-		$(SELECTOR.PURCHASE_MENU).addEventListener('click', () => {
-			this.renderTab(this.$purchaseTab);
-		});
-	}
-
-	renderTab(tab) {
-		this.clearContentsArea();
-		$(SELECTOR.CONTENTS_AREA).appendChild(tab);
-	}
-
-	clearContentsArea() {
+	clearTabArea() {
 		if ($(SELECTOR.CONTENTS_AREA).hasChildNodes()) {
 			$(SELECTOR.CONTENTS_AREA).firstChild.remove();
 		}
