@@ -1,6 +1,6 @@
 export const SELECTOR = {
     APP: '#app',
-    TAB_AREA: '#contents-area',
+    TAB_AREA: '#tab-area',
     COIN_MENU: '#vending-machine-manage-menu',
     PRODUCT_MENU: '#product-add-menu',
     PURCHASE_MENU: '#product-purchase-menu',
