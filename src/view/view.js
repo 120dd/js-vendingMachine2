@@ -49,7 +49,6 @@ export class View {
     }
     
     createTabArea() {
-        this.$tabArea.setAttribute('id', 'contents-area');
         $(SELECTOR.APP).appendChild(this.$tabArea);
     }
     
