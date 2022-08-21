@@ -1,3 +1,3 @@
-import { View } from './view/view.js';
+import { Controller } from "./controller.js";
 
-const view = new View();
+const vendingMachineController = Controller.factory();

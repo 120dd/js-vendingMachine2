@@ -4,4 +4,8 @@ export class Product {
         this.price = price;
         this.quantity = quantity;
     }
+    
+    static factory(name, price, quantity) {
+        return new Product(name, price, quantity)
+    }
 }

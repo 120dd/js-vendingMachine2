@@ -1,5 +1,6 @@
 import { $ } from '../utils/utils.js';
 import { SELECTOR, TEMPLATES } from './viewConstans.js';
+import { Product } from "../models/product.js";
 
 export class View {
     constructor() {
@@ -8,9 +9,13 @@ export class View {
         this.$productTab = this.createElement('div', TEMPLATES.PRODUCT_MENU);
         this.$machineTab = this.createElement('div', TEMPLATES.MACHINE_MENU);
         this.$purchaseTab = this.createElement('div', TEMPLATES.PURCHASE_MENU);
-        
-        this.initUi();
-        this.initHandlers();
+        this.initialized = {
+            addProduct: false,
+        }
+    }
+    
+    static factory() {
+        return new View();
     }
     
     initUi() {
@@ -23,9 +28,10 @@ export class View {
         $(SELECTOR.APP).appendChild(this.$tabArea);
     }
     
-    initHandlers() {
+    initHandlers(handlers) {
         $(SELECTOR.PRODUCT_MENU).addEventListener('click', () => {
             this.renderTab(this.$productTab);
+            this.registerAddProductButtonHandler(handlers.addProduct);
         });
         
         $(SELECTOR.COIN_MENU).addEventListener('click', () => {
@@ -56,5 +62,18 @@ export class View {
         if ($(SELECTOR.TAB_AREA).hasChildNodes()) {
             $(SELECTOR.TAB_AREA).firstChild.remove();
         }
+    }
+    
+    registerAddProductButtonHandler(callback) {
+        if (!this.initialized.addProduct) {
+            $(SELECTOR.PRODUCT_ADD_BUTTON).addEventListener('click', () => {
+                const productName = $(SELECTOR.PRODUCT_NAME_INPUT).value;
+                const productPrice = $(SELECTOR.PRODUCT_PRICE_INPUT).value;
+                const productQuantity = $(SELECTOR.PRODUCT_QUANTITY_INPUT).value;
+                const newProduct = Product.factory(productName, productPrice, productQuantity);
+                callback(newProduct);
+            });
+        }
+        this.initialized.addProduct = true;
     }
 }
