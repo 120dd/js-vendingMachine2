@@ -1,33 +1,33 @@
 export const SELECTOR = {
-	APP: '#app',
-	CONTENTS_AREA: '#contents-area',
-	COIN_MENU: '#vending-machine-manage-menu',
-	PRODUCT_MENU: '#product-add-menu',
-	PURCHASE_MENU: '#product-purchase-menu',
-	COIN_CHARGE_INPUT: '#vending-machine-charge-input',
-	COIN_CHARGE_BUTTON: '#vending-machine-charge-button',
-	COIN_500: '#vending-machine-coin-500-quantity',
-	COIN_100: '#vending-machine-coin-100-quantity',
-	COIN_50: '#vending-machine-coin-50-quantity',
-	COIN_10: '#vending-machine-coin-10-quantity',
-	PRODUCT_NAME_INPUT: '#product-name-input',
-	PRODUCT_PRICE_INPUT: '#product-price-input',
-	PRODUCT_QUANTITY_INPUT: '#product-quantity-input',
-	PRODUCT_ADD_BUTTON: '#product-add-button',
-	PURCHASE_CHARGE_INPUT: '#charge-input',
-	PURCHASE_CHARGE_AMOUNT: '#charge-amount',
-	PURCHASE_CHARGE_BUTTON: '#charge-button',
-	PURCHASE_ITEM_BUTTON: '.purchase-button',
-	PURCHASE_ITEM_QUANTITY: '.product-purchase-quantity',
+    APP: '#app',
+    TAB_AREA: '#contents-area',
+    COIN_MENU: '#vending-machine-manage-menu',
+    PRODUCT_MENU: '#product-add-menu',
+    PURCHASE_MENU: '#product-purchase-menu',
+    COIN_CHARGE_INPUT: '#vending-machine-charge-input',
+    COIN_CHARGE_BUTTON: '#vending-machine-charge-button',
+    COIN_500: '#vending-machine-coin-500-quantity',
+    COIN_100: '#vending-machine-coin-100-quantity',
+    COIN_50: '#vending-machine-coin-50-quantity',
+    COIN_10: '#vending-machine-coin-10-quantity',
+    PRODUCT_NAME_INPUT: '#product-name-input',
+    PRODUCT_PRICE_INPUT: '#product-price-input',
+    PRODUCT_QUANTITY_INPUT: '#product-quantity-input',
+    PRODUCT_ADD_BUTTON: '#product-add-button',
+    PURCHASE_CHARGE_INPUT: '#charge-input',
+    PURCHASE_CHARGE_AMOUNT: '#charge-amount',
+    PURCHASE_CHARGE_BUTTON: '#charge-button',
+    PURCHASE_ITEM_BUTTON: '.purchase-button',
+    PURCHASE_ITEM_QUANTITY: '.product-purchase-quantity',
 };
 export const TEMPLATES = {
-	HEADER: `
+    HEADER: `
 	<h1>자판기</h1>
 	<button id ="product-add-menu">상품 관리</button>
     <button id ="vending-machine-manage-menu">잔돈 충전</button>
     <button id ="product-purchase-menu">상품 구매</button>
 	`,
-	PRODUCT_MENU: `
+    PRODUCT_MENU: `
 	<h2>상품 추가하기</h2>
     <input id="product-name-input" type="text" placeholder="상품명">
     <input id="product-price-input" type="number" placeholder="가격">
@@ -42,7 +42,7 @@ export const TEMPLATES = {
 		</tr>
 	</table>
 	`,
-	MACHINE_MENU: `
+    MACHINE_MENU: `
 	<h3>자판기 동전 충전하기</h3>
 	<input type="number" id="vending-machine-charge-input">
 	<button id="vending-machine-charge-button">충전하기</button>
@@ -70,7 +70,7 @@ export const TEMPLATES = {
     	</tr>
 	</table>
 	`,
-	PURCHASE_MENU: `
+    PURCHASE_MENU: `
 	<h3>금액 투입</h3>
 	<input type="number" id="charge-input">
 	<button id="charge-button">투입하기</button>

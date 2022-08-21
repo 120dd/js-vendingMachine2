@@ -39,7 +39,7 @@ export class View {
     
     renderTab(tab) {
         this.clearTabArea();
-        $(SELECTOR.CONTENTS_AREA).appendChild(tab);
+        $(SELECTOR.TAB_AREA).appendChild(tab);
     }
     
     createElement(tagName, innerHtml) {
@@ -54,8 +54,8 @@ export class View {
     }
     
     clearTabArea() {
-        if ($(SELECTOR.CONTENTS_AREA).hasChildNodes()) {
-            $(SELECTOR.CONTENTS_AREA).firstChild.remove();
+        if ($(SELECTOR.TAB_AREA).hasChildNodes()) {
+            $(SELECTOR.TAB_AREA).firstChild.remove();
         }
     }
 }
