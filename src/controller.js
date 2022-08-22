@@ -4,7 +4,7 @@ import { Product } from "./models/product.js";
 
 export class Controller {
     constructor() {
-        this.view = View.factory();
+        this.view = new View();
         const mockProductList = [new Product('콜라', 1200, 20)]
         this.vendingMachine = new VendingMachine(mockProductList);
         this.view.initUi();
@@ -12,10 +12,6 @@ export class Controller {
             addProduct: this.requestAddProduct
         }
         this.view.initHandlers(this.handlers);
-    }
-    
-    static factory() {
-        return new Controller();
     }
     
     requestAddProduct = (product) => {

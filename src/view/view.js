@@ -14,10 +14,6 @@ export class View {
         }
     }
     
-    static factory() {
-        return new View();
-    }
-    
     initUi() {
         // header
         $(SELECTOR.APP).appendChild(this.$header);
@@ -71,7 +67,7 @@ export class View {
                 const productName = $(SELECTOR.PRODUCT_NAME_INPUT).value;
                 const productPrice = $(SELECTOR.PRODUCT_PRICE_INPUT).value;
                 const productQuantity = $(SELECTOR.PRODUCT_QUANTITY_INPUT).value;
-                const newProduct = Product.factory(productName, productPrice, productQuantity);
+                const newProduct = new Product(productName, productPrice, productQuantity);
                 callback(newProduct);
             });
         }
