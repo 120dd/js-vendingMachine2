@@ -1,6 +1,6 @@
 export class VendingMachine {
-    constructor(productList) {
-        productList ? this.products = [...productList] : this.products = []
+    constructor(productList = []) {
+        this.products = [...productList];
     }
     
     addProduct(product) {
