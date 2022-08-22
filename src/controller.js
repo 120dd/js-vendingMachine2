@@ -9,11 +9,12 @@ export class Controller {
         this.vendingMachine = new VendingMachine(mockProductList);
         this.view.initUi();
         this.view.initHandlers();
-        this.view.registerProductButtonClickHandler(this.requestAddProduct);
+        this.view.registerProductManageButtonClickEvent(this.requestAddProduct, this.vendingMachine.products);
     }
     
     requestAddProduct = (product) => {
         this.vendingMachine.addProduct(product);
         console.log(this.vendingMachine);
+        this.view.renderProductList(this.vendingMachine.products);
     }
 }

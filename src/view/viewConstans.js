@@ -10,6 +10,7 @@ export const SELECTOR = {
     COIN_100: '#vending-machine-coin-100-quantity',
     COIN_50: '#vending-machine-coin-50-quantity',
     COIN_10: '#vending-machine-coin-10-quantity',
+    PRODUCT_TABLE: '#added-product-table',
     PRODUCT_NAME_INPUT: '#product-name-input',
     PRODUCT_PRICE_INPUT: '#product-price-input',
     PRODUCT_QUANTITY_INPUT: '#product-quantity-input',
@@ -109,4 +110,16 @@ export const TEMPLATES = {
 	    </tr>
 	</table>
 	`,
-};
+    PRODUCT_TABLE_ITEM: (product) => `
+    <td class="product-manage-name">${product.name}</td>
+    <td class="product-manage-price">${product.price}</td>
+    <td class="product-manage-quantity">${product.quantity}</td>
+    `,
+    PRODUCT_TABLE_HEAD: `
+        <tr>
+			<th>상품명</th>
+			<th>가격</th>
+			<th>수량</th>
+		</tr>
+    `,
+}

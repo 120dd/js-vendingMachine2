@@ -34,16 +34,17 @@ export class View {
         });
     }
     
-    registerProductButtonClickHandler(callback) {
+    registerProductManageButtonClickEvent(callback, productList) {
         $(SELECTOR.PRODUCT_MENU).addEventListener('click', () => {
             this.renderTab(this.$productTab);
+            this.renderProductList(productList);
             this.registerAddProductButtonHandler(callback);
             this.initialized.addProduct = true;
         });
     }
     
     renderTab(tab) {
-        this.clearTabArea();
+        this.removeAllChild($(SELECTOR.TAB_AREA));
         $(SELECTOR.TAB_AREA).appendChild(tab);
     }
     
@@ -57,12 +58,6 @@ export class View {
         $(SELECTOR.APP).appendChild(this.$tabArea);
     }
     
-    clearTabArea() {
-        if ($(SELECTOR.TAB_AREA).hasChildNodes()) {
-            $(SELECTOR.TAB_AREA).firstChild.remove();
-        }
-    }
-    
     registerAddProductButtonHandler(callback) {
         if (!this.initialized.addProduct) {
             $(SELECTOR.PRODUCT_ADD_BUTTON).addEventListener('click', () => {
@@ -72,6 +67,30 @@ export class View {
                 const newProduct = new Product(productName, productPrice, productQuantity);
                 callback(newProduct);
             });
+        }
+    }
+    
+    renderProductList(productList) {
+        this.removeAllChild($(SELECTOR.PRODUCT_TABLE));
+        this.renderProductTableHeader();
+        productList.map(product => {
+            this.renderProductListItem(product);
+        });
+    }
+    
+    renderProductTableHeader() {
+        const tableHeader = this.createElement('tr', TEMPLATES.PRODUCT_TABLE_HEAD);
+        $(SELECTOR.PRODUCT_TABLE).appendChild(tableHeader);
+    }
+    
+    renderProductListItem(product) {
+        const newProduct = this.createElement('tr', TEMPLATES.PRODUCT_TABLE_ITEM(product));
+        $(SELECTOR.PRODUCT_TABLE).appendChild(newProduct);
+    }
+    
+    removeAllChild(targetNode) {
+        while (targetNode.hasChildNodes()) {
+            targetNode.removeChild(targetNode.firstChild)
         }
     }
 }
