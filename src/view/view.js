@@ -24,19 +24,21 @@ export class View {
         $(SELECTOR.APP).appendChild(this.$tabArea);
     }
     
-    initHandlers(handlers) {
-        $(SELECTOR.PRODUCT_MENU).addEventListener('click', () => {
-            this.renderTab(this.$productTab);
-            this.registerAddProductButtonHandler(handlers.addProduct);
-            this.initialized.addProduct = true;
-        });
-        
+    initHandlers() {
         $(SELECTOR.COIN_MENU).addEventListener('click', () => {
             this.renderTab(this.$machineTab);
         });
         
         $(SELECTOR.PURCHASE_MENU).addEventListener('click', () => {
             this.renderTab(this.$purchaseTab);
+        });
+    }
+    
+    registerProductButtonClickHandler(callback) {
+        $(SELECTOR.PRODUCT_MENU).addEventListener('click', () => {
+            this.renderTab(this.$productTab);
+            this.registerAddProductButtonHandler(callback);
+            this.initialized.addProduct = true;
         });
     }
     
