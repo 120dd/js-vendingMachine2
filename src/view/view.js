@@ -32,6 +32,7 @@ export class View {
         $(SELECTOR.PRODUCT_MENU).addEventListener('click', () => {
             this.renderTab(this.$productTab);
             this.registerAddProductButtonHandler(handlers.addProduct);
+            this.initialized.addProduct = true;
         });
         
         $(SELECTOR.COIN_MENU).addEventListener('click', () => {
@@ -74,6 +75,5 @@ export class View {
                 callback(newProduct);
             });
         }
-        this.initialized.addProduct = true;
     }
 }
