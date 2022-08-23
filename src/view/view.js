@@ -12,6 +12,8 @@ export class View {
         this.initialized = {
             addProduct: false,
         }
+        this.initUi();
+        this.initHandlers();
     }
     
     initUi() {

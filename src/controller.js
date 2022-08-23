@@ -7,8 +7,6 @@ export class Controller {
         this.view = new View();
         const mockProductList = [new Product('콜라', 1200, 20)];
         this.vendingMachine = new VendingMachine(mockProductList);
-        this.view.initUi();
-        this.view.initHandlers();
         this.view.registerProductManageButtonClickEvent(this.requestAddProduct, this.vendingMachine.products);
     }
     
