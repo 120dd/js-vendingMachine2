@@ -36,11 +36,11 @@ export class View {
         });
     }
     
-    registerProductManageButtonClickEvent(callback, productList) {
+    registerProductTabButtonClickEvent(callback, productList) {
         $(SELECTOR.PRODUCT_MENU).addEventListener('click', () => {
             this.renderTab(this.$productTab);
             this.renderProductList(productList);
-            this.registerAddProductButtonHandler(callback);
+            this.registerAddProductButtonHandler(callback, productList);
             this.initialized.addProduct = true;
         });
     }
@@ -60,7 +60,7 @@ export class View {
         $(SELECTOR.APP).appendChild(this.$tabArea);
     }
     
-    registerAddProductButtonHandler(callback) {
+    registerAddProductButtonHandler(callback, productList) {
         if (!this.initialized.addProduct) {
             $(SELECTOR.PRODUCT_ADD_BUTTON).addEventListener('click', () => {
                 const productName = $(SELECTOR.PRODUCT_NAME_INPUT).value;
@@ -68,6 +68,7 @@ export class View {
                 const productQuantity = $(SELECTOR.PRODUCT_QUANTITY_INPUT).value;
                 const newProduct = new Product(productName, productPrice, productQuantity);
                 callback(newProduct);
+                this.renderProductList(productList);
             });
         }
     }
