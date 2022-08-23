@@ -8,11 +8,15 @@ export class Controller {
         const mockProductList = [new Product('콜라', 1200, 20)];
         this.vendingMachine = new VendingMachine(mockProductList);
         this.view.registerProductManageButtonClickEvent(this.requestAddProduct, this.vendingMachine.products);
+        this.view.registerCoinTabButtonClickEvent(this.requestChargeCoin, this.vendingMachine.returnCoins);
     }
     
     requestAddProduct = (product) => {
         this.vendingMachine.addProduct(product);
         console.log(this.vendingMachine);
         this.view.renderProductList(this.vendingMachine.products);
+    }
+    requestChargeCoin = (balance) => {
+        this.vendingMachine.addReturnCoin(balance);
     }
 }

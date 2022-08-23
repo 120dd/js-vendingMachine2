@@ -45,6 +45,14 @@ export class View {
         });
     }
     
+    registerCoinTabButtonClickEvent(callback, returnCoins) {
+        $(SELECTOR.COIN_MENU).addEventListener('click', () => {
+            this.renderTab(this.$machineTab);
+            this.renderChargedCoins(returnCoins);
+            this.registerChargeReturnCoinButton(callback, returnCoins);
+        });
+    }
+    
     renderTab(tab) {
         this.removeAllChild($(SELECTOR.TAB_AREA));
         $(SELECTOR.TAB_AREA).appendChild(tab);
@@ -94,5 +102,20 @@ export class View {
         while (targetNode.hasChildNodes()) {
             targetNode.removeChild(targetNode.firstChild)
         }
+    }
+    
+    registerChargeReturnCoinButton(callback, chargeCoins) {
+        const chargeBalance = $(SELECTOR.COIN_CHARGE_INPUT);
+        $(SELECTOR.COIN_CHARGE_BUTTON).addEventListener("click", () => {
+            callback(chargeBalance.value);
+            this.renderChargedCoins(chargeCoins);
+        })
+    }
+    
+    renderChargedCoins(chargedCoins) {
+        $(SELECTOR.COIN_500).innerText = chargedCoins.COIN_500;
+        $(SELECTOR.COIN_100).innerText = chargedCoins.COIN_100;
+        $(SELECTOR.COIN_50).innerText = chargedCoins.COIN_50;
+        $(SELECTOR.COIN_10).innerText = chargedCoins.COIN_10;
     }
 }
