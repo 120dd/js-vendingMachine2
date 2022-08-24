@@ -1,16 +1,20 @@
 import { SELECTOR } from "./viewConstans.js";
 import { $ } from "../utils/utils.js";
 
-export function renderBody(selector, html) {
+export function renderTemplate(selector, html) {
     document.querySelector(selector).insertAdjacentHTML('beforeend', html);
 }
 
 export function renderSection(sectionId, template) {
     if (!document.querySelector(`#${sectionId}`)) {
-        renderBody(SELECTOR.PAGE_AREA, `<div id="${sectionId}">${template}</div>`);
+        renderTemplate(SELECTOR.PAGE_AREA, `<div id="${sectionId}">${template}</div>`);
     }
 }
 
-export function clearNode(selector) {
+export function clearChildNode(selector) {
     $(selector).innerHTML = ``;
+}
+
+export function clearClassNode(className) {
+    document.querySelectorAll(`.${className}`).forEach((item) => item.remove());
 }

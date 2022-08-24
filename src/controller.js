@@ -1,17 +1,15 @@
 import { View } from "./view/view.js";
 import { VendingMachine } from "./models/vendingMachine.js";
-import { Product } from "./models/product.js";
 
 export class Controller {
     constructor() {
         this.view = new View();
-        const mockProductList = [new Product('콜라', 1200, 20)];
-        this.vendingMachine = new VendingMachine(mockProductList);
-        // this.view.registerProductPageButtonHandler()
-        // this.view.registerProductTabButtonClickEvent(this.requestAddProduct, this.vendingMachine.products);
+        this.vendingMachine = new VendingMachine();
+        this.view.registerProductPageButtonHandler(this.requestAddProduct)
     }
     
     requestAddProduct = (product) => {
         this.vendingMachine.addProduct(product);
+        this.view.renderProductList(this.vendingMachine.products);
     }
 }
