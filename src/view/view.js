@@ -1,22 +1,23 @@
 import { $ } from '../utils/utils.js';
 import { SELECTOR, templates } from './viewConstans.js';
-import { clearChildNode, renderTemplate, renderSection, clearClassNode } from "./viewHelper.js";
+import {
+    clearChildNode,
+    renderTemplate,
+    renderSection,
+    clearClassNode,
+    clearInput
+} from "./viewHelper.js";
 import { Product } from "../models/product.js";
 import { VendingMachine } from "../models/vendingMachine.js";
 
 export class View {
     constructor() {
-        const mockProductList = [new Product('콜라', 1200, 20)];
+        const mockProductList = [new Product({ name: '콜라', price: 1200, quantity: 20 })];
         this.vendingMachine = new VendingMachine(mockProductList);
         renderTemplate(SELECTOR.APP, templates.title);
         renderTemplate(SELECTOR.APP, templates.menu);
         renderTemplate(SELECTOR.APP, templates.pageArea);
         
-        $(SELECTOR.COIN_MENU).addEventListener('click', () => {
-            clearChildNode(SELECTOR.PAGE_AREA);
-            renderSection('charge-coin-form', templates.chargeCoinForm);
-            renderSection('charged-coin-list', templates.chargedCoinList);
-        });
         $(SELECTOR.PURCHASE_MENU).addEventListener('click', () => {
             clearChildNode(SELECTOR.PAGE_AREA);
             renderSection('charge-user-balance', templates.chargeUserBalance);
@@ -27,11 +28,14 @@ export class View {
     
     registerAddProductButtonHandler(callback) {
         $(SELECTOR.PRODUCT_ADD_BUTTON).addEventListener('click', () => {
-            const productName = $(SELECTOR.PRODUCT_NAME_INPUT).value;
-            const productPrice = $(SELECTOR.PRODUCT_PRICE_INPUT).value;
-            const productQuantity = $(SELECTOR.PRODUCT_QUANTITY_INPUT).value;
-            const newProduct = new Product(productName, productPrice, productQuantity);
+            const name = $(SELECTOR.PRODUCT_NAME_INPUT).value;
+            const price = $(SELECTOR.PRODUCT_PRICE_INPUT).value;
+            const quantity = $(SELECTOR.PRODUCT_QUANTITY_INPUT).value;
+            const newProduct = new Product({ name, price, quantity });
             callback(newProduct);
+            clearInput(SELECTOR.PRODUCT_NAME_INPUT);
+            clearInput(SELECTOR.PRODUCT_PRICE_INPUT);
+            clearInput(SELECTOR.PRODUCT_QUANTITY_INPUT);
         });
     }
     
@@ -45,10 +49,35 @@ export class View {
         });
     }
     
+    registerCoinChargePageButtonHandler(callback) {
+        $(SELECTOR.COIN_MENU).addEventListener('click', () => {
+            clearChildNode(SELECTOR.PAGE_AREA);
+            renderSection('charge-coin-form', templates.chargeCoinForm);
+            renderSection('charged-coin-list', templates.chargedCoinList);
+            this.renderChargedCoins(this.vendingMachine.returnCoins);
+            this.registerChargeCoinButtonHandler(callback);
+        });
+    }
+    
+    registerChargeCoinButtonHandler(callback) {
+        const chargeBalance = $(SELECTOR.COIN_CHARGE_INPUT);
+        $(SELECTOR.COIN_CHARGE_BUTTON).addEventListener("click", () => {
+            callback(chargeBalance.value);
+            clearInput(SELECTOR.COIN_CHARGE_INPUT);
+        })
+    }
+    
     renderProductList(productList) {
         clearClassNode('product-list-item');
         productList.map((product) => {
             renderTemplate(SELECTOR.PRODUCT_TABLE, templates.productListItem(product))
         })
+    }
+    
+    renderChargedCoins(chargedCoins) {
+        $(SELECTOR.COIN_500).innerText = chargedCoins.COIN_500;
+        $(SELECTOR.COIN_100).innerText = chargedCoins.COIN_100;
+        $(SELECTOR.COIN_50).innerText = chargedCoins.COIN_50;
+        $(SELECTOR.COIN_10).innerText = chargedCoins.COIN_10;
     }
 }

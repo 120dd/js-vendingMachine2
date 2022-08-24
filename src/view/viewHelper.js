@@ -18,3 +18,7 @@ export function clearChildNode(selector) {
 export function clearClassNode(className) {
     document.querySelectorAll(`.${className}`).forEach((item) => item.remove());
 }
+
+export function clearInput(selector) {
+    $(selector).value = '';
+}
