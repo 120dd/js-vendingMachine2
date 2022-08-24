@@ -1,12 +1,10 @@
-let instance;
-
 export class VendingMachine {
     constructor(productList = []) {
-        if (instance) {
-            return instance
+        if (VendingMachine.instance) {
+            return VendingMachine.instance
         }
         this.products = [...productList];
-        instance = this
+        VendingMachine.instance = this
     }
     
     addProduct(product) {
