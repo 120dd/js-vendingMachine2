@@ -1,6 +1,4 @@
 import { View } from "./view/view.js";
-import { ProductList } from "./models/productList.js";
-import { ReturnCoinList } from "./models/returnCoinList.js";
 import { Product } from "./models/product.js";
 import { pickRandomNumberInList } from "./utils/utils.js";
 import { VendingMachineData } from "./models/vendingMachineData.js";
