@@ -16,7 +16,8 @@ export class VendingMachine {
     }
     
     addProduct(product) {
-        this.products.push(product);
+        const newProducts = [...this.products, product];
+        this.setProducts(newProducts);
     }
     
     addReturnCoin(balance) {
@@ -30,6 +31,14 @@ export class VendingMachine {
             remainBalance -= newCoin;
             newCoins[ `COIN_${newCoin}` ] += 1;
         }
+        this.setReturnCoins(newCoins)
+    }
+    
+    setReturnCoins(newCoins) {
         this.returnCoins = newCoins;
+    }
+    
+    setProducts(newProducts) {
+        this.products = newProducts;
     }
 }
