@@ -21,13 +21,15 @@ export class VendingMachine {
     
     addReturnCoin(balance) {
         let remainBalance = balance;
+        const newCoins = { ...this.returnCoins };
         while (remainBalance > 0) {
             const newCoin = pickRandomNumberInList([10, 50, 100, 500]);
             if (newCoin > remainBalance) {
                 continue;
             }
             remainBalance -= newCoin;
-            this.returnCoins[ `COIN_${newCoin}` ] += 1;
+            newCoins[ `COIN_${newCoin}` ] += 1;
         }
+        this.returnCoins = newCoins;
     }
 }

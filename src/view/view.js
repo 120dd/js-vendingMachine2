@@ -28,9 +28,9 @@ export class View {
     
     registerAddProductButtonHandler(callback) {
         $(SELECTOR.PRODUCT_ADD_BUTTON).addEventListener('click', () => {
-            const name = $(SELECTOR.PRODUCT_NAME_INPUT).value;
-            const price = $(SELECTOR.PRODUCT_PRICE_INPUT).value;
-            const quantity = $(SELECTOR.PRODUCT_QUANTITY_INPUT).value;
+            const name = $(SELECTOR.PRODUCT_NAME_INPUT).valueAsString;
+            const price = $(SELECTOR.PRODUCT_PRICE_INPUT).valueAsNumber;
+            const quantity = $(SELECTOR.PRODUCT_QUANTITY_INPUT).valueAsNumber;
             const newProduct = new Product({ name, price, quantity });
             callback(newProduct);
             clearInput(SELECTOR.PRODUCT_NAME_INPUT);
@@ -62,7 +62,8 @@ export class View {
     registerChargeCoinButtonHandler(callback) {
         const chargeBalance = $(SELECTOR.COIN_CHARGE_INPUT);
         $(SELECTOR.COIN_CHARGE_BUTTON).addEventListener("click", () => {
-            callback(chargeBalance.value);
+            callback(chargeBalance.valueAsNumber);
+            this.renderChargedCoins(this.vendingMachine.returnCoins);
             clearInput(SELECTOR.COIN_CHARGE_INPUT);
         })
     }

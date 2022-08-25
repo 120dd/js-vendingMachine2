@@ -16,6 +16,5 @@ export class Controller {
     
     requestChargeCoin = (balance) => {
         this.vendingMachine.addReturnCoin(balance);
-        this.view.renderChargedCoins(this.vendingMachine.returnCoins);
     }
 }
