@@ -8,12 +8,13 @@ import {
     clearInput
 } from "./viewHelper.js";
 import { Product } from "../models/product.js";
-import { VendingMachine } from "../models/vendingMachine.js";
+
+// import { VendingMachine } from "../models/vendingMachine.js";
 
 export class View {
     constructor() {
-        const mockProductList = [new Product({ name: '콜라', price: 1200, quantity: 20 })];
-        this.vendingMachine = new VendingMachine(mockProductList);
+        // const mockProductList = [new Product({ name: '콜라', price: 1200, quantity: 20 })];
+        // this.vendingMachine = new VendingMachine(mockProductList);
         renderTemplate(SELECTOR.APP, templates.title);
         renderTemplate(SELECTOR.APP, templates.menu);
         renderTemplate(SELECTOR.APP, templates.pageArea);

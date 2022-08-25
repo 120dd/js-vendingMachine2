@@ -15,20 +15,22 @@ export class VendingMachineController {
     }
     
     addProduct = (product) => {
-        this.productList.list.push(product);
+        this.productList.list = [...this.productList.list, product]
         this.view.renderProductList(this.productList.list);
     }
     
     addReturnCoin = (balance) => {
         let remainBalance = balance;
+        const newCoinList = { ...this.returnCoinList };
         while (remainBalance > 0) {
             const newCoin = pickRandomNumberInList([10, 50, 100, 500]);
             if (newCoin > remainBalance) {
                 continue;
             }
             remainBalance -= newCoin;
-            this.returnCoinList[ `coinQuantity${newCoin}` ] += 1;
+            newCoinList[ `coinQuantity${newCoin}` ] += 1;
         }
+        this.returnCoinList = newCoinList;
         this.view.renderChargedCoins(this.returnCoinList)
     }
 }
