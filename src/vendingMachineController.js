@@ -8,28 +8,27 @@ import { VendingMachineData } from "./models/vendingMachineData.js";
 export class VendingMachineController {
     constructor() {
         this.view = new View();
-        this.data = new VendingMachineData();
-        this.view.registerProductPageButtonHandler(this.addProduct, this.data.productList.list);
+        const mockProductData = [new Product({ name: '콜라', price: 1200, quantity: 20 })];
+        this.data = new VendingMachineData(mockProductData);
+        this.view.registerProductPageButtonHandler(this.addProduct, this.data.productList);
         this.view.registerCoinChargePageButtonHandler(this.addReturnCoin, this.data.returnCoinList);
     }
     
     addProduct = (product) => {
-        this.data.productList.list = [...this.data.productList.list, product]
-        this.view.renderProductList(this.data.productList.list);
+        this.data.productList.push(product);
+        this.view.renderProductList(this.data.productList);
     }
     
     addReturnCoin = (balance) => {
         let remainBalance = balance;
-        const newCoinList = { ...this.data.returnCoinList };
         while (remainBalance > 0) {
             const newCoin = pickRandomNumberInList([10, 50, 100, 500]);
             if (newCoin > remainBalance) {
                 continue;
             }
             remainBalance -= newCoin;
-            newCoinList[ `coinQuantity${newCoin}` ] += 1;
+            this.data.returnCoinList[ `coinQuantity${newCoin}` ] += 1;
         }
-        this.data.returnCoinList = newCoinList;
         this.view.renderChargedCoins(this.data.returnCoinList);
     }
 }

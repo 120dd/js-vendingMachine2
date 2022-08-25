@@ -1,12 +1,12 @@
-import { ProductList } from "./productList.js";
-import { ReturnCoinList } from "./returnCoinList.js";
-import { Product } from "./product.js";
-
 export class VendingMachineData {
-    constructor() {
-        const mockProductList = [new Product({ name: '콜라', price: 1200, quantity: 20 })];
-        this.productList = new ProductList(mockProductList);
-        this.returnCoinList = new ReturnCoinList();
+    constructor(productList = []) {
+        this.productList = [...productList];
+        this.returnCoinList = {
+            'coinQuantity500': 0,
+            'coinQuantity100': 0,
+            'coinQuantity50': 0,
+            'coinQuantity10': 0,
+        };
         this.userBalance = 0
     }
 }
