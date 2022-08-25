@@ -20,5 +20,6 @@ module.exports = {
         'no-alert': 'off',
         'no-undef': 'off',
         'array-callback-return': 'off',
+        'no-continue': 'off',
     },
 };
