@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "우아한테크코스 프리코스 자판기 미션",
   "devDependencies": {
+    "@babel/core": "^7.18.13",
+    "@babel/eslint-parser": "^7.18.9",
+    "@babel/eslint-plugin": "^7.18.10",
     "cypress": "8.7.0",
     "eslint": "^8.22.0",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -32,5 +35,9 @@
   "engines": {
     "npm": ">=6.0.0",
     "node": ">=14.0.0"
+  },
+  "dependencies": {
+    "-": "^0.0.1",
+    "g": "^2.0.1"
   }
 }
