@@ -3,25 +3,24 @@ import { ProductList } from "./models/productList.js";
 import { ReturnCoinList } from "./models/returnCoinList.js";
 import { Product } from "./models/product.js";
 import { pickRandomNumberInList } from "./utils/utils.js";
+import { VendingMachineData } from "./models/vendingMachineData.js";
 
 export class VendingMachineController {
     constructor() {
         this.view = new View();
-        const mockProductList = [new Product({ name: '콜라', price: 1200, quantity: 20 })];
-        this.productList = new ProductList(mockProductList);
-        this.returnCoinList = new ReturnCoinList();
-        this.view.registerProductPageButtonHandler(this.addProduct, this.productList.list);
-        this.view.registerCoinChargePageButtonHandler(this.addReturnCoin, this.returnCoinList);
+        this.data = new VendingMachineData();
+        this.view.registerProductPageButtonHandler(this.addProduct, this.data.productList.list);
+        this.view.registerCoinChargePageButtonHandler(this.addReturnCoin, this.data.returnCoinList);
     }
     
     addProduct = (product) => {
-        this.productList.list = [...this.productList.list, product]
-        this.view.renderProductList(this.productList.list);
+        this.data.productList.list = [...this.data.productList.list, product]
+        this.view.renderProductList(this.data.productList.list);
     }
     
     addReturnCoin = (balance) => {
         let remainBalance = balance;
-        const newCoinList = { ...this.returnCoinList };
+        const newCoinList = { ...this.data.returnCoinList };
         while (remainBalance > 0) {
             const newCoin = pickRandomNumberInList([10, 50, 100, 500]);
             if (newCoin > remainBalance) {
@@ -30,7 +29,7 @@ export class VendingMachineController {
             remainBalance -= newCoin;
             newCoinList[ `coinQuantity${newCoin}` ] += 1;
         }
-        this.returnCoinList = newCoinList;
-        this.view.renderChargedCoins(this.returnCoinList)
+        this.data.returnCoinList = newCoinList;
+        this.view.renderChargedCoins(this.data.returnCoinList);
     }
 }
