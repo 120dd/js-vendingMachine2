@@ -8,8 +8,8 @@ export class VendingMachineController {
         this.view = new View();
         const mockProductData = [new Product({ name: '콜라', price: 1200, quantity: 20 })];
         this.data = new VendingMachineData(mockProductData);
-        this.view.registerProductPageButtonHandler(this.addProduct, this.data.productList);
-        this.view.registerCoinChargePageButtonHandler(this.addReturnCoin, this.data.returnCoinList);
+        this.view.registerProductPageButtonHandler(this.addProduct, this.data.productList)
+        .registerCoinChargePageButtonHandler(this.addReturnCoin, this.data.returnCoinList);
     }
     
     addProduct = (product) => {

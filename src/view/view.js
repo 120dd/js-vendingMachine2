@@ -45,6 +45,7 @@ export class View {
             this.renderProductList(productList);
             this.registerAddProductButtonHandler(callback);
         });
+        return this;
     }
     
     registerCoinChargePageButtonHandler(callback, returnCoinList) {
@@ -55,6 +56,7 @@ export class View {
             this.renderChargedCoins(returnCoinList);
             this.registerChargeCoinButtonHandler(callback);
         });
+        return this;
     }
     
     registerChargeCoinButtonHandler(callback) {
