@@ -28,7 +28,7 @@ export class View {
     
     registerAddProductButtonHandler(callback) {
         $(SELECTOR.PRODUCT_ADD_BUTTON).addEventListener('click', () => {
-            const name = $(SELECTOR.PRODUCT_NAME_INPUT).valueAsString;
+            const name = $(SELECTOR.PRODUCT_NAME_INPUT).value;
             const price = $(SELECTOR.PRODUCT_PRICE_INPUT).valueAsNumber;
             const quantity = $(SELECTOR.PRODUCT_QUANTITY_INPUT).valueAsNumber;
             const newProduct = new Product({ name, price, quantity });
@@ -39,22 +39,22 @@ export class View {
         });
     }
     
-    registerProductPageButtonHandler(callback) {
+    registerProductPageButtonHandler(callback, productList) {
         $(SELECTOR.PRODUCT_MENU).addEventListener('click', () => {
             clearChildNode(SELECTOR.PAGE_AREA);
             renderSection('add-product-form', templates.addProductForm);
             renderSection('added-product-list', templates.addedProductList);
-            this.renderProductList(this.vendingMachine.products);
+            this.renderProductList(productList);
             this.registerAddProductButtonHandler(callback);
         });
     }
     
-    registerCoinChargePageButtonHandler(callback) {
+    registerCoinChargePageButtonHandler(callback, returnCoinList) {
         $(SELECTOR.COIN_MENU).addEventListener('click', () => {
             clearChildNode(SELECTOR.PAGE_AREA);
             renderSection('charge-coin-form', templates.chargeCoinForm);
             renderSection('charged-coin-list', templates.chargedCoinList);
-            this.renderChargedCoins(this.vendingMachine.returnCoins);
+            this.renderChargedCoins(returnCoinList);
             this.registerChargeCoinButtonHandler(callback);
         });
     }
@@ -63,7 +63,6 @@ export class View {
         const chargeBalance = $(SELECTOR.COIN_CHARGE_INPUT);
         $(SELECTOR.COIN_CHARGE_BUTTON).addEventListener("click", () => {
             callback(chargeBalance.valueAsNumber);
-            this.renderChargedCoins(this.vendingMachine.returnCoins);
             clearInput(SELECTOR.COIN_CHARGE_INPUT);
         })
     }
@@ -76,9 +75,9 @@ export class View {
     }
     
     renderChargedCoins(chargedCoins) {
-        $(SELECTOR.COIN_500).innerText = chargedCoins.COIN_500;
-        $(SELECTOR.COIN_100).innerText = chargedCoins.COIN_100;
-        $(SELECTOR.COIN_50).innerText = chargedCoins.COIN_50;
-        $(SELECTOR.COIN_10).innerText = chargedCoins.COIN_10;
+        $(SELECTOR.COIN_500).innerText = chargedCoins.coinQuantity500;
+        $(SELECTOR.COIN_100).innerText = chargedCoins.coinQuantity100;
+        $(SELECTOR.COIN_50).innerText = chargedCoins.coinQuantity50;
+        $(SELECTOR.COIN_10).innerText = chargedCoins.coinQuantity10;
     }
 }
