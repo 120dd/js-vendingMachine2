@@ -152,5 +152,8 @@ export const templates = {
             </tr>
         </table>
     </div>
+    `,
+    userBalance: (balance) => `
+    ${balance}원
     `
 }

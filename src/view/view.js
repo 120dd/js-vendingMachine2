@@ -18,13 +18,27 @@ export class View {
         renderTemplate(SELECTOR.APP, templates.pageArea);
         
         this.vendingMachine = new VendingMachine();
-        
+    }
+    
+    registerPurchasePageButtonHandler(callback) {
         $(SELECTOR.PURCHASE_MENU).addEventListener('click', () => {
             clearChildNode(SELECTOR.PAGE_AREA);
             renderSection('charge-user-balance', templates.chargeUserBalance);
             renderSection('purchase-item-list', templates.purchaseItemList);
             renderSection('returned-coin-list', templates.returnedCoinList);
+            this.renderUserBalance(this.vendingMachine.userBalance.amount);
+            this.registerChargeBalanceButtonHandler(callback);
         });
+    }
+    
+    registerChargeBalanceButtonHandler(callback) {
+        const chargedBalance = $(SELECTOR.PURCHASE_CHARGE_INPUT);
+        $(SELECTOR.PURCHASE_CHARGE_BUTTON).onclick = () => {
+            callback(chargedBalance.valueAsNumber);
+            this.renderUserBalance(this.vendingMachine.userBalance.amount);
+            clearInput(SELECTOR.PURCHASE_CHARGE_INPUT);
+        }
+        
     }
     
     registerAddProductButtonHandler(callback) {
@@ -34,6 +48,7 @@ export class View {
             const quantity = $(SELECTOR.PRODUCT_QUANTITY_INPUT).valueAsNumber;
             const newProduct = new Product({ name, price, quantity });
             callback(newProduct);
+            this.renderProductList(this.vendingMachine.products);
             clearInput(SELECTOR.PRODUCT_NAME_INPUT);
             clearInput(SELECTOR.PRODUCT_PRICE_INPUT);
             clearInput(SELECTOR.PRODUCT_QUANTITY_INPUT);
@@ -81,5 +96,9 @@ export class View {
         $(SELECTOR.COIN_100).innerText = chargedCoins.COIN_100;
         $(SELECTOR.COIN_50).innerText = chargedCoins.COIN_50;
         $(SELECTOR.COIN_10).innerText = chargedCoins.COIN_10;
+    }
+    
+    renderUserBalance(userBalance) {
+        $(SELECTOR.PURCHASE_CHARGE_AMOUNT).innerHTML = templates.userBalance(userBalance);
     }
 }

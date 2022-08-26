@@ -13,6 +13,7 @@ export class VendingMachine {
             'COIN_50': 0,
             'COIN_10': 0,
         }
+        this.userBalance = { amount: 0, currency: '원' };
     }
     
     addProduct(product) {
@@ -34,11 +35,21 @@ export class VendingMachine {
         this.setReturnCoins(newCoins)
     }
     
+    addUserBalance(balance) {
+        const newBalance = { ...this.userBalance };
+        newBalance.amount += balance;
+        this.setUserBalance(newBalance);
+    }
+    
     setReturnCoins(newCoins) {
         this.returnCoins = newCoins;
     }
     
     setProducts(newProducts) {
         this.products = newProducts;
+    }
+    
+    setUserBalance(newBalance) {
+        this.userBalance = newBalance
     }
 }

@@ -9,14 +9,18 @@ export class VendingmachineHandler {
         this.view = new View();
         this.view.registerProductPageButtonHandler(this.requestAddProduct);
         this.view.registerCoinChargePageButtonHandler(this.requestChargeCoin);
+        this.view.registerPurchasePageButtonHandler(this.requestChargeBalance);
     }
     
     requestAddProduct = (product) => {
         this.vendingMachine.addProduct(product);
-        this.view.renderProductList(this.vendingMachine.products);
     }
     
     requestChargeCoin = (balance) => {
         this.vendingMachine.addReturnCoin(balance);
+    }
+    
+    requestChargeBalance = (balance) => {
+        this.vendingMachine.addUserBalance(balance);
     }
 }
