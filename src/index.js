@@ -1,3 +1,3 @@
-import { Controller } from "./controller.js";
+import { VendingmachineHandler } from "./vendingmachineHandler.js";
 
-const vendingMachineController = new Controller();
+const vendingMachineController = new VendingmachineHandler();
