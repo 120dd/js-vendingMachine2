@@ -41,6 +41,16 @@ export class VendingMachine {
         this.setUserBalance(newBalance);
     }
     
+    purchaseProduct(idx) {
+        const { price } = this.products[ idx ];
+        const newUserBalance = { ...this.userBalance };
+        newUserBalance.amount -= price;
+        this.setUserBalance(newUserBalance);
+        const newProducts = [...this.products];
+        newProducts[ idx ].quantity -= 1;
+        this.setProducts(newProducts);
+    }
+    
     setReturnCoins(newCoins) {
         this.returnCoins = newCoins;
     }

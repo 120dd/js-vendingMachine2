@@ -20,14 +20,28 @@ export class View {
         this.vendingMachine = new VendingMachine();
     }
     
-    registerPurchasePageButtonHandler(callback) {
+    registerPurchasePageButtonHandler(callback, purchaseCallback) {
         $(SELECTOR.PURCHASE_MENU).addEventListener('click', () => {
             clearChildNode(SELECTOR.PAGE_AREA);
             renderSection('charge-user-balance', templates.chargeUserBalance);
             renderSection('purchase-item-list', templates.purchaseItemList);
             renderSection('returned-coin-list', templates.returnedCoinList);
             this.renderUserBalance(this.vendingMachine.userBalance.amount);
+            this.renderPurchaseProductList(this.vendingMachine.products);
+            this.registerPurchaseButtonHandler(purchaseCallback);
             this.registerChargeBalanceButtonHandler(callback);
+        });
+    }
+    
+    registerPurchaseButtonHandler(purchaseCallback) {
+        document.querySelectorAll(SELECTOR.PURCHASE_ITEM_BUTTON).forEach((button, idx) => {
+            const targetQuantity = this.vendingMachine.products[ idx ].quantity;
+            if (targetQuantity <= 0) {
+                button.disabled = true;
+            }
+            button.addEventListener('click', () => {
+                purchaseCallback(idx);
+            })
         });
     }
     
@@ -100,5 +114,12 @@ export class View {
     
     renderUserBalance(userBalance) {
         $(SELECTOR.PURCHASE_CHARGE_AMOUNT).innerHTML = templates.userBalance(userBalance);
+    }
+    
+    renderPurchaseProductList(products) {
+        clearClassNode('product-purchase-item');
+        products.map((product) => {
+            renderTemplate('#purchase-product-table', templates.purchaseProductItem(product));
+        });
     }
 }
