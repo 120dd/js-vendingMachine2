@@ -48,7 +48,6 @@ export class View {
             this.renderProductList(this.vendingMachine.products);
             this.registerAddProductButtonHandler(callback);
         });
-        return this;
     }
     
     registerCoinChargePageButtonHandler(callback) {
@@ -59,7 +58,6 @@ export class View {
             this.renderChargedCoins(this.vendingMachine.returnCoins);
             this.registerChargeCoinButtonHandler(callback);
         });
-        return this;
     }
     
     registerChargeCoinButtonHandler(callback) {
