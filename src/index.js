@@ -1,3 +1,4 @@
-import { VendingmachineHandler } from "./vendingmachineHandler.js";
+import { VendingMachineHandler } from "./vendingMachineHandler.js";
 
-const vendingMachineController = new VendingmachineHandler();
+const isDevelop = false;
+const vendingMachineController = new VendingMachineHandler(isDevelop);
