@@ -20,7 +20,7 @@ export class View {
         this.vendingMachine = new VendingMachine();
     }
     
-    registerPurchasePageButtonHandler(callback, purchaseCallback) {
+    registerPurchasePageButtonHandler(callback, purchaseCallback, returnCallback) {
         $(SELECTOR.PURCHASE_MENU).addEventListener('click', () => {
             clearChildNode(SELECTOR.PAGE_AREA);
             renderSection('charge-user-balance', templates.chargeUserBalance);
@@ -30,7 +30,14 @@ export class View {
             this.renderPurchaseProductList(this.vendingMachine.products);
             this.registerPurchaseButtonHandler(purchaseCallback);
             this.registerChargeBalanceButtonHandler(callback);
+            this.registerReturnCoinButtonHandler(returnCallback);
         });
+    }
+    
+    registerReturnCoinButtonHandler(returnCallback) {
+        $(SELECTOR.RETURN_COIN_BUTTON).onclick = () => {
+            returnCallback()
+        }
     }
     
     registerPurchaseButtonHandler(purchaseCallback) {
@@ -121,5 +128,12 @@ export class View {
         products.map((product) => {
             renderTemplate('#purchase-product-table', templates.purchaseProductItem(product));
         });
+    }
+    
+    renderReturnedCoins(coins) {
+        $(SELECTOR.RETURN_500).innerHTML = coins.COIN_500;
+        $(SELECTOR.RETURN_100).innerText = coins.COIN_100;
+        $(SELECTOR.RETURN_50).innerText = coins.COIN_50;
+        $(SELECTOR.RETURN_10).innerText = coins.COIN_10;
     }
 }

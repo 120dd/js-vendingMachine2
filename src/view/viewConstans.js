@@ -22,6 +22,11 @@ export const SELECTOR = {
     PURCHASE_MENU_TABLE: '#purchase-product-table',
     PURCHASE_ITEM_BUTTON: '.purchase-button',
     PURCHASE_ITEM_QUANTITY: '.product-purchase-quantity',
+    RETURN_COIN_BUTTON: '#coin-return-button',
+    RETURN_500: '#coin-500-quantity',
+    RETURN_100: '#coin-100-quantity',
+    RETURN_50: '#coin-50-quantity',
+    RETURN_10: '#coin-10-quantity',
 };
 
 export const templates = {

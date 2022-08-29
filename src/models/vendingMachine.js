@@ -51,6 +51,27 @@ export class VendingMachine {
         this.setProducts(newProducts);
     }
     
+    getReturnedCoins() {
+        const returned500 = this.getReturnedCoin(this.userBalance.amount, 500);
+        this.userBalance.amount -= returned500 * 500;
+        const returned100 = this.getReturnedCoin(this.userBalance.amount, 100);
+        this.userBalance.amount -= returned100 * 100;
+        const returned50 = this.getReturnedCoin(this.userBalance.amount, 50);
+        this.userBalance.amount -= returned50 * 50;
+        const returned10 = this.getReturnedCoin(this.userBalance.amount, 10);
+        this.userBalance.amount -= returned10 * 10;
+        return {
+            'COIN_500': returned500,
+            'COIN_100': returned100,
+            'COIN_50': returned50,
+            'COIN_10': returned10,
+        }
+    }
+    
+    getReturnedCoin(balance, faceValue) {
+        return Math.min(Math.floor(balance / faceValue), this.returnCoins[ `COIN_${faceValue}` ]);
+    }
+    
     setReturnCoins(newCoins) {
         this.returnCoins = newCoins;
     }
