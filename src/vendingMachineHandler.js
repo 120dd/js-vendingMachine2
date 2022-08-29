@@ -2,11 +2,11 @@ import { View } from "./view/view.js";
 import { VendingMachine } from "./models/vendingMachine.js";
 
 export class VendingMachineHandler {
-    constructor(modckData) {
-        if (modckData) {
-            this.vendingMachine = new VendingMachine(modckData.products);
+    constructor(mockData) {
+        if (mockData) {
+            this.vendingMachine = new VendingMachine(mockData.products);
         }
-        if (!modckData){
+        if (!mockData){
             this.vendingMachine = new VendingMachine();
         }
         this.view = new View();
