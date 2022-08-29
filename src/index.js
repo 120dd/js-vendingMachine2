@@ -1,7 +1,7 @@
 import { VendingMachineHandler } from "./vendingMachineHandler.js";
 import { Product } from "./models/product.js";
 
-const isDevelop = true
+const isDevelop = false
 
 const mockData = {
     products: [
@@ -9,9 +9,11 @@ const mockData = {
         new Product({ name: '환타', price: 1000, quantity: 10 }),
     ],
 }
-if (isDevelop){
-    const vendingMachine = new VendingMachineHandler(mockData);
+
+const deployData = {
+    products: []
 }
-if (!isDevelop){
-    const vendingMachine = new VendingMachineHandler();
-}
+
+const initialData = isDevelop ? mockData : deployData;
+const vendingMachine = new VendingMachineHandler(initialData);
+

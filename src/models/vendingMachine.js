@@ -1,11 +1,11 @@
 import { pickRandomNumberInList } from "../utils/utils.js";
 
 export class VendingMachine {
-    constructor(productList = []) {
+    constructor(initialData) {
         if (VendingMachine.instance) {
             return VendingMachine.instance
         }
-        this.products = [...productList];
+        this.products = initialData.products;
         VendingMachine.instance = this;
         this.returnCoins = {
             'COIN_500': 0,

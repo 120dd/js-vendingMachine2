@@ -16,7 +16,6 @@ export class View {
         renderTemplate(SELECTOR.APP, templates.title);
         renderTemplate(SELECTOR.APP, templates.menu);
         renderTemplate(SELECTOR.APP, templates.pageArea);
-        
         this.vendingMachine = new VendingMachine();
     }
     

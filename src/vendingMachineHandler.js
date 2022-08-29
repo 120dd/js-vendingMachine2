@@ -2,13 +2,8 @@ import { View } from "./view/view.js";
 import { VendingMachine } from "./models/vendingMachine.js";
 
 export class VendingMachineHandler {
-    constructor(mockData) {
-        if (mockData) {
-            this.vendingMachine = new VendingMachine(mockData.products);
-        }
-        if (!mockData){
-            this.vendingMachine = new VendingMachine();
-        }
+    constructor(initialData) {
+        this.vendingMachine = new VendingMachine(initialData);
         this.view = new View();
         this.view.registerProductPageButtonHandler(this.requestAddProduct);
         this.view.registerCoinChargePageButtonHandler(this.requestChargeCoin);
