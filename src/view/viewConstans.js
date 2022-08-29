@@ -1,4 +1,4 @@
-export const SELECTOR = {
+export const SELECTOR = Object.freeze({
     APP: '#app',
     PAGE_AREA: '#page-area',
     TAB_AREA: '#tab-area',
@@ -27,7 +27,7 @@ export const SELECTOR = {
     RETURN_100: '#coin-100-quantity',
     RETURN_50: '#coin-50-quantity',
     RETURN_10: '#coin-10-quantity',
-};
+});
 
 export const templates = {
     title: `
