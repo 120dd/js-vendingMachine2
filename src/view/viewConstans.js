@@ -19,6 +19,7 @@ export const SELECTOR = {
     PURCHASE_CHARGE_INPUT: '#charge-input',
     PURCHASE_CHARGE_AMOUNT: '#charge-amount',
     PURCHASE_CHARGE_BUTTON: '#charge-button',
+    PURCHASE_MENU_TABLE: '#purchase-product-table',
     PURCHASE_ITEM_BUTTON: '.purchase-button',
     PURCHASE_ITEM_QUANTITY: '.product-purchase-quantity',
 };
@@ -115,7 +116,7 @@ export const templates = {
     purchaseItemList: `
     <div>
         <h3>구매할 수 있는 상품 현황</h3>
-        <table id="purchaseMenuTable" border="1">
+        <table id="purchase-product-table" border="1">
         <tr>
             <th>상품명</th>
             <th>가격</th>
@@ -155,5 +156,15 @@ export const templates = {
     `,
     userBalance: (balance) => `
     ${balance}원
+    `,
+    purchaseProductItem: (product) => `
+            <tr class="product-purchase-item">
+                <td class="product-purchase-name">${product.name}</td>
+                <td class="product-purchase-price">${product.price}</td>
+                <td class="product-purchase-quantity">${product.quantity}</td>
+                <td>
+                <input type="button" class="purchase-button" value="구매하기"/>
+                </td>
+            </tr>
     `
 }
