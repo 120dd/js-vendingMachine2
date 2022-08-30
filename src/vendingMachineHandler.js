@@ -16,6 +16,12 @@ export class VendingMachineHandler {
     
     requestReturnCoin = () => {
         const returnedCoins = this.vendingMachine.getReturnedCoins();
+        this.view.renderReturnedCoins(this.vendingMachine.machineCoins);
+        this.view.renderUserBalance(this.vendingMachine.userBalance.amount);
+    }
+    
+    requestReturnCoin2 = () => {
+        const returnedCoins = this.vendingMachine.getReturnedCoins();
         const newReturnCoins = {
             'COIN_500': this.vendingMachine.returnCoins.COIN_500 - returnedCoins.COIN_500,
             'COIN_100': this.vendingMachine.returnCoins.COIN_100 - returnedCoins.COIN_100,

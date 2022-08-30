@@ -1,5 +1,6 @@
 import { pickRandomNumberInList } from "../utils/utils.js";
 import { COINS } from "../constans/constans.js";
+import { MachineCoins } from "./machineCoins.js";
 
 export class VendingMachine {
     constructor(initialData) {
@@ -8,12 +9,7 @@ export class VendingMachine {
         }
         this.products = initialData.products;
         VendingMachine.instance = this;
-        this.returnCoins = {
-            'COIN_500': 0,
-            'COIN_100': 0,
-            'COIN_50': 0,
-            'COIN_10': 0,
-        }
+        this.machineCoins = new MachineCoins(initialData.machineCoins);
         this.userBalance = { amount: 0, currency: '원' };
     }
     
@@ -24,16 +20,14 @@ export class VendingMachine {
     
     addReturnCoin(balance) {
         let remainBalance = balance;
-        const newCoins = { ...this.returnCoins };
         while (remainBalance > 0) {
             const newCoin = pickRandomNumberInList([10, 50, 100, 500]);
             if (newCoin > remainBalance) {
                 continue;
             }
             remainBalance -= newCoin;
-            newCoins[ `COIN_${newCoin}` ] += 1;
+            this.machineCoins.changeCoin(newCoin,1);
         }
-        this.setReturnCoins(newCoins)
     }
     
     addUserBalance(balance) {
@@ -72,7 +66,7 @@ export class VendingMachine {
     }
     
     setReturnCoins(newCoins) {
-        this.returnCoins = newCoins;
+        this.machineCoins = newCoins;
     }
     
     setProducts(newProducts) {

@@ -8,6 +8,12 @@ const mockData = {
         new Product({ name: '콜라', price: 1200, quantity: 20 }),
         new Product({ name: '환타', price: 1000, quantity: 10 }),
     ],
+    machineCoins: {
+        coinQuantity500:0,
+        coinQuantity100:0,
+        coinQuantity50:0,
+        coinQuantity10:0,
+    }
 }
 
 const deployData = {
