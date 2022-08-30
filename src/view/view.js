@@ -19,7 +19,7 @@ export class View {
         this.vendingMachine = new VendingMachine();
     }
     
-    registerPurchasePageButtonHandler(callback, purchaseCallback, returnCallback) {
+    registerPurchasePageButtonHandler(requestChargeBalanceFn, requestPurchaseProductFn, requestReturnCoinFn) {
         $(SELECTOR.PURCHASE_MENU).addEventListener('click', () => {
             clearChildNode(SELECTOR.PAGE_AREA);
             renderSection('charge-user-balance', templates.chargeUserBalance);
@@ -27,15 +27,15 @@ export class View {
             renderSection('returned-coin-list', templates.returnedCoinList);
             this.renderUserBalance(this.vendingMachine.userBalance.amount);
             this.renderPurchaseProductList(this.vendingMachine.products);
-            this.registerPurchaseButtonHandler(purchaseCallback);
-            this.registerChargeBalanceButtonHandler(callback);
-            this.registerReturnCoinButtonHandler(returnCallback);
+            this.registerPurchaseButtonHandler(requestPurchaseProductFn);
+            this.registerChargeBalanceButtonHandler(requestChargeBalanceFn);
+            this.registerReturnCoinButtonHandler(requestReturnCoinFn);
         });
     }
     
-    registerReturnCoinButtonHandler(returnCallback) {
+    registerReturnCoinButtonHandler(callback) {
         $(SELECTOR.RETURN_COIN_BUTTON).onclick = () => {
-            returnCallback()
+            callback()
         }
     }
     
@@ -43,6 +43,7 @@ export class View {
         document.querySelectorAll(SELECTOR.PURCHASE_ITEM_BUTTON).forEach((button, idx) => {
             const targetQuantity = this.vendingMachine.products[ idx ].quantity;
             if (targetQuantity <= 0) {
+                // eslint-disable-next-line no-param-reassign
                 button.disabled = true;
             }
             button.addEventListener('click', () => {
