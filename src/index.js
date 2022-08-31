@@ -9,15 +9,29 @@ const mockData = {
         new Product({ name: '환타', price: 1000, quantity: 10 }),
     ],
     machineCoins: {
-        coinQuantity500:0,
-        coinQuantity100:0,
-        coinQuantity50:0,
-        coinQuantity10:0,
+        coinQuantity500:5,
+        coinQuantity100:4,
+        coinQuantity50:3,
+        coinQuantity10:2,
+    },
+    userBalance:{
+        quantity:3000,
+        currency:'원'
     }
 }
 
 const deployData = {
-    products: []
+    products: [],
+    machineCoins: {
+        coinQuantity500:0,
+        coinQuantity100:0,
+        coinQuantity50:0,
+        coinQuantity10:0,
+    },
+    userBalance:{
+        quantity:0,
+        currency:'원'
+    }
 }
 
 const initialData = isDevelop ? mockData : deployData;

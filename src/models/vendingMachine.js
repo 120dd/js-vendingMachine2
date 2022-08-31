@@ -1,6 +1,7 @@
 import { pickRandomNumberInList } from "../utils/utils.js";
 import { COINS } from "../constans/constans.js";
 import { MachineCoins } from "./machineCoins.js";
+import { UserBalance } from "./userBalance.js";
 
 export class VendingMachine {
     constructor(initialData) {
@@ -10,7 +11,8 @@ export class VendingMachine {
         this.products = initialData.products;
         VendingMachine.instance = this;
         this.machineCoins = new MachineCoins(initialData.machineCoins);
-        this.userBalance = { amount: 0, currency: '원' };
+        this.userBalance = new UserBalance(initialData.userBalance);
+        this.returnedCoin = new MachineCoins()
     }
     
     addProduct(product) {
@@ -18,7 +20,7 @@ export class VendingMachine {
         this.setProducts(newProducts);
     }
     
-    addReturnCoin(balance) {
+    addMachineCoin(balance) {
         let remainBalance = balance;
         while (remainBalance > 0) {
             const newCoin = pickRandomNumberInList([10, 50, 100, 500]);
@@ -31,49 +33,32 @@ export class VendingMachine {
     }
     
     addUserBalance(balance) {
-        const newBalance = { ...this.userBalance, amount: this.userBalance.amount + balance };
-        this.setUserBalance(newBalance);
+        this.userBalance.changeQuantity(balance);
     }
     
     purchaseProduct(idx) {
         const { price } = this.products[ idx ];
-        const newBalance = { ...this.userBalance, amount: this.userBalance.amount - price };
-        this.setUserBalance(newBalance);
+        this.userBalance.changeQuantity(-price);
         const newProducts = [...this.products];
         newProducts[ idx ].quantity -= 1;
         this.setProducts(newProducts);
     }
     
-    getReturnedCoins() {
-        let remainBalance = this.userBalance.amount;
-        const returnedCoin = {
-            'COIN_500': 0,
-            'COIN_100': 0,
-            'COIN_50': 0,
-            'COIN_10': 0,
-        }
+    returnCoins() {
+        let remainBalance = this.userBalance.quantity;
         COINS.map(coin => {
-            returnedCoin[`COIN_${coin}`] = this.getReturnedCoin(remainBalance,coin);
-            remainBalance -= returnedCoin[`COIN_${coin}`] * coin;
+            this.returnedCoin.changeCoin(coin,this.getReturnedCoin(remainBalance,coin))
+            remainBalance -= this.returnedCoin[`coinQuantity${coin}`] * coin;
+            this.machineCoins.changeCoin(coin,-this.returnedCoin[`coinQuantity${coin}`]);
         })
-        const newBalance = { ...this.userBalance, amount: remainBalance };
-        this.setUserBalance(newBalance);
-        return returnedCoin;
+        this.userBalance.setNewQuantity(remainBalance);
     }
     
     getReturnedCoin(balance, faceValue) {
-        return Math.min(Math.floor(balance / faceValue), this.returnCoins[ `COIN_${faceValue}` ]);
-    }
-    
-    setReturnCoins(newCoins) {
-        this.machineCoins = newCoins;
+        return Math.min(Math.floor(balance / faceValue), this.machineCoins[ `coinQuantity${faceValue}` ]);
     }
     
     setProducts(newProducts) {
         this.products = newProducts;
-    }
-    
-    setUserBalance(newBalance) {
-        this.userBalance = newBalance
     }
 }
