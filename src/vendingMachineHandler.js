@@ -18,6 +18,7 @@ export class VendingMachineHandler {
         this.vendingMachine.returnCoins();
         this.view.renderReturnedCoins(this.vendingMachine.returnedCoin);
         this.view.renderUserBalance(this.vendingMachine.userBalance.quantity);
+        this.vendingMachine.returnedCoin.resetCoins();
     }
     
     requestAddProduct = (product) => {

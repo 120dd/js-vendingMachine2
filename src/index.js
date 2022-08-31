@@ -9,10 +9,10 @@ const mockData = {
         new Product({ name: '환타', price: 1000, quantity: 10 }),
     ],
     machineCoins: {
-        coinQuantity500:5,
-        coinQuantity100:4,
-        coinQuantity50:3,
-        coinQuantity10:2,
+        coinQuantity500:1,
+        coinQuantity100:1,
+        coinQuantity50:0,
+        coinQuantity10:0,
     },
     userBalance:{
         quantity:3000,
