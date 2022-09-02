@@ -19,4 +19,8 @@ export class Coin {
         this.#quantity += quantity;
         return this.#quantity;
     }
+    
+    setQuantity = (newQuantity) => {
+        this.#quantity = newQuantity;
+    }
 }

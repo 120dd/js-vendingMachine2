@@ -130,9 +130,8 @@ export class View {
     }
     
     renderReturnedCoins(coins) {
-        $(SELECTOR.RETURN_500).innerHTML = coins.coinQuantity500;
-        $(SELECTOR.RETURN_100).innerText = coins.coinQuantity100;
-        $(SELECTOR.RETURN_50).innerText = coins.coinQuantity50;
-        $(SELECTOR.RETURN_10).innerText = coins.coinQuantity10;
+        coins.map(coin=>{
+            $(SELECTOR[`RETURN_${coin.getValue()}`]).innerText = coin.getQuantity();
+        });
     }
 }
