@@ -26,7 +26,7 @@ export class View {
             renderSection('purchase-item-list', templates.purchaseItemList);
             renderSection('returned-coin-list', templates.returnedCoinList);
             this.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
-            this.renderPurchaseProductList(this.vendingMachine.products);
+            this.renderPurchaseProductList(this.vendingMachine.getProducts());
             this.registerPurchaseButtonHandler(requestPurchaseProductFn);
             this.registerChargeBalanceButtonHandler(requestChargeBalanceFn);
             this.registerReturnCoinButtonHandler(requestReturnCoinFn);
@@ -41,7 +41,7 @@ export class View {
     
     registerPurchaseButtonHandler(purchaseCallback) {
         document.querySelectorAll(SELECTOR.PURCHASE_ITEM_BUTTON).forEach((button, idx) => {
-            const targetQuantity = this.vendingMachine.products[ idx ].quantity;
+            const targetQuantity = this.vendingMachine.getProducts()[ idx ].quantity;
             if (targetQuantity <= 0) {
                 // eslint-disable-next-line no-param-reassign
                 button.disabled = true;
@@ -69,7 +69,7 @@ export class View {
             const quantity = $(SELECTOR.PRODUCT_QUANTITY_INPUT).valueAsNumber;
             const newProduct = new Product({ name, price, quantity });
             callback(newProduct);
-            this.renderProductList(this.vendingMachine.products);
+            this.renderProductList(this.vendingMachine.getProducts());
             clearInput(SELECTOR.PRODUCT_NAME_INPUT);
             clearInput(SELECTOR.PRODUCT_PRICE_INPUT);
             clearInput(SELECTOR.PRODUCT_QUANTITY_INPUT);
@@ -81,7 +81,7 @@ export class View {
             clearChildNode(SELECTOR.PAGE_AREA);
             renderSection('add-product-form', templates.addProductForm);
             renderSection('added-product-list', templates.addedProductList);
-            this.renderProductList(this.vendingMachine.products);
+            this.renderProductList(this.vendingMachine.getProducts());
             this.registerAddProductButtonHandler(callback);
         });
     }

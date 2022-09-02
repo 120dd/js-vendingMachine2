@@ -36,7 +36,7 @@ export class VendingMachineHandler {
     requestPurchaseProduct = (idx) => {
         this.vendingMachine.purchaseProduct(idx);
         this.view.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
-        this.view.renderPurchaseProductList(this.vendingMachine.products);
+        this.view.renderPurchaseProductList(this.vendingMachine.getProducts());
         this.view.registerPurchaseButtonHandler(this.requestPurchaseProduct);
     }
 }
