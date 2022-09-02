@@ -1,9 +1,10 @@
 import { pickRandomNumberInList } from "../utils/utils.js";
 import { COINS } from "../constans/constans.js";
 import { MachineCoins } from "./machineCoins.js";
-import { UserBalance } from "./userBalance.js";
 
 export class VendingMachine {
+    #userBalance;
+
     constructor(initialData) {
         if (VendingMachine.instance) {
             return VendingMachine.instance
@@ -11,8 +12,8 @@ export class VendingMachine {
         this.products = initialData.products;
         VendingMachine.instance = this;
         this.machineCoins = new MachineCoins(initialData.machineCoins);
-        this.userBalance = new UserBalance(initialData.userBalance);
-        this.returnedCoin = new MachineCoins()
+        this.#userBalance = initialData.userBalance;
+        this.returnedCoin = new MachineCoins();
     }
     
     addProduct(product) {
@@ -33,25 +34,25 @@ export class VendingMachine {
     }
     
     addUserBalance(balance) {
-        this.userBalance.changeQuantity(balance);
+        this.changeUserBalance(balance);
     }
     
     purchaseProduct(idx) {
         const { price } = this.products[ idx ];
-        this.userBalance.changeQuantity(-price);
+        this.changeUserBalance(-price);
         const newProducts = [...this.products];
         newProducts[ idx ].quantity -= 1;
         this.setProducts(newProducts);
     }
     
     returnCoins() {
-        let remainBalance = this.userBalance.quantity;
+        let remainBalance = this.#userBalance.quantity;
         COINS.map(coin => {
             this.returnedCoin.changeCoin(coin,this.getReturnedCoin(remainBalance,coin))
             remainBalance -= this.returnedCoin[`coinQuantity${coin}`] * coin;
             this.machineCoins.changeCoin(coin,-this.returnedCoin[`coinQuantity${coin}`]);
         })
-        this.userBalance.setNewQuantity(remainBalance);
+        this.setUserBalance(remainBalance,'원');
     }
     
     getReturnedCoin(balance, faceValue) {
@@ -60,5 +61,18 @@ export class VendingMachine {
     
     setProducts(newProducts) {
         this.products = newProducts;
+    }
+    
+    setUserBalance(quantity,currency){
+        this.#userBalance.quantity = quantity;
+        this.#userBalance.currency = currency;
+    }
+    
+    changeUserBalance(balance){
+        this.#userBalance.quantity += balance;
+    }
+    
+    getUserBalanceQuantity(){
+        return this.#userBalance.quantity;
     }
 }

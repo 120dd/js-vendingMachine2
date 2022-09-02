@@ -17,7 +17,7 @@ export class VendingMachineHandler {
     requestReturnCoin = () => {
         this.vendingMachine.returnCoins();
         this.view.renderReturnedCoins(this.vendingMachine.returnedCoin);
-        this.view.renderUserBalance(this.vendingMachine.userBalance.quantity);
+        this.view.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
         this.vendingMachine.returnedCoin.resetCoins();
     }
     
@@ -35,7 +35,7 @@ export class VendingMachineHandler {
     
     requestPurchaseProduct = (idx) => {
         this.vendingMachine.purchaseProduct(idx);
-        this.view.renderUserBalance(this.vendingMachine.userBalance.quantity);
+        this.view.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
         this.view.renderPurchaseProductList(this.vendingMachine.products);
         this.view.registerPurchaseButtonHandler(this.requestPurchaseProduct);
     }

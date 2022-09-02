@@ -25,7 +25,7 @@ export class View {
             renderSection('charge-user-balance', templates.chargeUserBalance);
             renderSection('purchase-item-list', templates.purchaseItemList);
             renderSection('returned-coin-list', templates.returnedCoinList);
-            this.renderUserBalance(this.vendingMachine.userBalance.quantity);
+            this.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
             this.renderPurchaseProductList(this.vendingMachine.products);
             this.registerPurchaseButtonHandler(requestPurchaseProductFn);
             this.registerChargeBalanceButtonHandler(requestChargeBalanceFn);
@@ -56,7 +56,7 @@ export class View {
         const chargedBalance = $(SELECTOR.PURCHASE_CHARGE_INPUT);
         $(SELECTOR.PURCHASE_CHARGE_BUTTON).onclick = () => {
             callback(chargedBalance.valueAsNumber);
-            this.renderUserBalance(this.vendingMachine.userBalance.quantity);
+            this.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
             clearInput(SELECTOR.PURCHASE_CHARGE_INPUT);
         }
         
