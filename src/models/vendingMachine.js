@@ -68,12 +68,10 @@ export class VendingMachine {
     returnCoins() {
         let remainBalance = this.#userBalance.quantity;
         this.#returnCoins.forEach((coin) => {
-            console.log(coin);
             coin.changeQuantity(this.#getReturnedCoin(remainBalance, coin.getValue()));
             remainBalance -= coin.getQuantity() * coin.getValue();
             this.#changeMachineCoinQuantity(coin.getValue(), coin.getQuantity());
         });
-        console.log(this.#returnCoins);
         this.setUserBalance(remainBalance, '원');
     }
     
