@@ -7,15 +7,17 @@ export class VendingMachine {
     
     #products;
     
+    #machineCoins
+    
     constructor(initialData) {
         if (VendingMachine.instance) {
             return VendingMachine.instance
         }
         this.#products = initialData.products;
         VendingMachine.instance = this;
-        this.machineCoins = new MachineCoins(initialData.machineCoins);
+        this.#machineCoins = initialData.machineCoins;
         this.#userBalance = initialData.userBalance;
-        this.returnedCoin = new MachineCoins();
+        // this.returnedCoin = new MachineCoins();
     }
     
     addProduct(product) {
@@ -31,8 +33,13 @@ export class VendingMachine {
                 continue;
             }
             remainBalance -= newCoin;
-            this.machineCoins.changeCoin(newCoin,1);
+            this.#chargeMachineCoin(newCoin,1);
         }
+    }
+    
+    #chargeMachineCoin(value,quantity){
+        const idx = this.#machineCoins.findIndex(coin=> coin.getValue() === value);
+        this.#machineCoins[idx].changeQuantity(quantity);
     }
     
     addUserBalance(balance) {
@@ -52,17 +59,17 @@ export class VendingMachine {
         COINS.map(coin => {
             this.returnedCoin.changeCoin(coin,this.#getReturnedCoin(remainBalance,coin))
             remainBalance -= this.returnedCoin[`coinQuantity${coin}`] * coin;
-            this.machineCoins.changeCoin(coin,-this.returnedCoin[`coinQuantity${coin}`]);
+            this.#machineCoins.changeCoin(coin,-this.returnedCoin[`coinQuantity${coin}`]);
         })
         this.setUserBalance(remainBalance,'원');
     }
     
-    getProducts(){
-        return this.#products;
-    }
+    getProducts = () => this.#products;
+    
+    getMachineCoins = () => this.#machineCoins;
     
     #getReturnedCoin(balance, faceValue) {
-        return Math.min(Math.floor(balance / faceValue), this.machineCoins[ `coinQuantity${faceValue}` ]);
+        return Math.min(Math.floor(balance / faceValue), this.#machineCoins[ `coinQuantity${faceValue}` ]);
     }
     
     #setProducts(newProducts) {

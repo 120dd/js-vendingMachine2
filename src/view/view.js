@@ -91,7 +91,7 @@ export class View {
             clearChildNode(SELECTOR.PAGE_AREA);
             renderSection('charge-coin-form', templates.chargeCoinForm);
             renderSection('charged-coin-list', templates.chargedCoinList);
-            this.renderChargedCoins(this.vendingMachine.machineCoins);
+            this.renderChargedCoins(this.vendingMachine.getMachineCoins());
             this.registerChargeCoinButtonHandler(callback);
         });
     }
@@ -100,7 +100,7 @@ export class View {
         const chargeBalance = $(SELECTOR.COIN_CHARGE_INPUT);
         $(SELECTOR.COIN_CHARGE_BUTTON).addEventListener("click", () => {
             callback(chargeBalance.valueAsNumber);
-            this.renderChargedCoins(this.vendingMachine.machineCoins);
+            this.renderChargedCoins(this.vendingMachine.getMachineCoins());
             clearInput(SELECTOR.COIN_CHARGE_INPUT);
         })
     }
@@ -113,10 +113,9 @@ export class View {
     }
     
     renderChargedCoins(chargedCoins) {
-        $(SELECTOR.COIN_500).innerText = chargedCoins.coinQuantity500;
-        $(SELECTOR.COIN_100).innerText = chargedCoins.coinQuantity100;
-        $(SELECTOR.COIN_50).innerText = chargedCoins.coinQuantity50;
-        $(SELECTOR.COIN_10).innerText = chargedCoins.coinQuantity10;
+        chargedCoins.map(coin=>{
+            $(SELECTOR[`COIN_${coin.getValue()}`]).innerText = coin.getQuantity();
+        })
     }
     
     renderUserBalance(userBalance) {
