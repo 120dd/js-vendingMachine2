@@ -77,6 +77,8 @@ export class VendingMachine {
     
     getProducts = () => this.#products;
     
+    getProduct = (idx) => this.#products[idx];
+    
     getMachineCoins = () => this.#machineCoins;
     
     #getReturnedCoin(balance, faceValue) {

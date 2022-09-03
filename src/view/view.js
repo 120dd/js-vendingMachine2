@@ -134,4 +134,8 @@ export class View {
             $(SELECTOR[`RETURN_${coin.getValue()}`]).innerText = coin.getQuantity();
         });
     }
+    
+    showAlert(msg){
+        alert(msg);
+    }
 }

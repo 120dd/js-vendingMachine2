@@ -1,5 +1,6 @@
 import { View } from "./view/view.js";
 import { VendingMachine } from "./models/vendingMachine.js";
+import { validEnoughMoney, validMoney, validName, validQuantity } from "./validator.js";
 
 export class VendingMachineHandler {
     constructor(initialData) {
@@ -22,18 +23,44 @@ export class VendingMachineHandler {
     }
     
     requestAddProduct = (product) => {
+        const validResults = [
+            validName(product.name).code,
+            validMoney(product.price).code,
+            validQuantity(product.quantity).code,
+        ]
+        if (validResults.some(result=>result !=='SUCCESS')){
+            this.view.showAlert(validResults.find(result=>result!=="SUCCESS"))
+            return;
+        }
         this.vendingMachine.addProduct(product);
     }
     
     requestChargeCoin = (balance) => {
+        const validResult = validMoney(balance);
+        if (validResult.code !== 'SUCCESS'){
+            this.view.showAlert(validResult.code);
+            return;
+        }
         this.vendingMachine.addMachineCoin(balance);
     }
     
     requestChargeBalance = (balance) => {
+        const validResult = validMoney(balance);
+        if (validResult.code !== 'SUCCESS'){
+            this.view.showAlert(validResult.code);
+            return;
+        }
         this.vendingMachine.addUserBalance(balance);
     }
     
     requestPurchaseProduct = (idx) => {
+        const productPrice = this.vendingMachine.getProduct(idx).price;
+        const userBalance = this.vendingMachine.getUserBalanceQuantity();
+        const validResult = validEnoughMoney(productPrice,userBalance);
+        if (validEnoughMoney(productPrice,userBalance).code !== 'SUCCESS'){
+            this.view.showAlert(validResult.code);
+            return;
+        }
         this.vendingMachine.purchaseProduct(idx);
         this.view.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
         this.view.renderPurchaseProductList(this.vendingMachine.getProducts());
