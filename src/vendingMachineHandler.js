@@ -7,7 +7,18 @@ export class VendingMachineHandler {
         this.view = new View();
         this.view.registerProductPageButtonHandler(this.requestAddProduct);
         this.view.registerCoinChargePageButtonHandler(this.requestChargeCoin);
-        this.view.registerPurchasePageButtonHandler(this.requestChargeBalance, this.requestPurchaseProduct);
+        this.view.registerPurchasePageButtonHandler(
+            this.requestChargeBalance,
+            this.requestPurchaseProduct,
+            this.requestReturnCoin,
+        );
+    }
+    
+    requestReturnCoin = () => {
+        this.vendingMachine.returnCoins();
+        this.view.renderReturnedCoins(this.vendingMachine.getReturnCoins());
+        this.view.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
+        this.vendingMachine.resetReturnCoins();
     }
     
     requestAddProduct = (product) => {
@@ -15,7 +26,7 @@ export class VendingMachineHandler {
     }
     
     requestChargeCoin = (balance) => {
-        this.vendingMachine.addReturnCoin(balance);
+        this.vendingMachine.addMachineCoin(balance);
     }
     
     requestChargeBalance = (balance) => {
@@ -24,8 +35,8 @@ export class VendingMachineHandler {
     
     requestPurchaseProduct = (idx) => {
         this.vendingMachine.purchaseProduct(idx);
-        this.view.renderUserBalance(this.vendingMachine.userBalance.amount);
-        this.view.renderPurchaseProductList(this.vendingMachine.products);
+        this.view.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
+        this.view.renderPurchaseProductList(this.vendingMachine.getProducts());
         this.view.registerPurchaseButtonHandler(this.requestPurchaseProduct);
     }
 }

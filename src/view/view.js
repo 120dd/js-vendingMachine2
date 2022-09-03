@@ -19,23 +19,31 @@ export class View {
         this.vendingMachine = new VendingMachine();
     }
     
-    registerPurchasePageButtonHandler(callback, purchaseCallback) {
+    registerPurchasePageButtonHandler(requestChargeBalanceFn, requestPurchaseProductFn, requestReturnCoinFn) {
         $(SELECTOR.PURCHASE_MENU).addEventListener('click', () => {
             clearChildNode(SELECTOR.PAGE_AREA);
             renderSection('charge-user-balance', templates.chargeUserBalance);
             renderSection('purchase-item-list', templates.purchaseItemList);
             renderSection('returned-coin-list', templates.returnedCoinList);
-            this.renderUserBalance(this.vendingMachine.userBalance.amount);
-            this.renderPurchaseProductList(this.vendingMachine.products);
-            this.registerPurchaseButtonHandler(purchaseCallback);
-            this.registerChargeBalanceButtonHandler(callback);
+            this.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
+            this.renderPurchaseProductList(this.vendingMachine.getProducts());
+            this.registerPurchaseButtonHandler(requestPurchaseProductFn);
+            this.registerChargeBalanceButtonHandler(requestChargeBalanceFn);
+            this.registerReturnCoinButtonHandler(requestReturnCoinFn);
         });
+    }
+    
+    registerReturnCoinButtonHandler(callback) {
+        $(SELECTOR.RETURN_COIN_BUTTON).onclick = () => {
+            callback()
+        }
     }
     
     registerPurchaseButtonHandler(purchaseCallback) {
         document.querySelectorAll(SELECTOR.PURCHASE_ITEM_BUTTON).forEach((button, idx) => {
-            const targetQuantity = this.vendingMachine.products[ idx ].quantity;
+            const targetQuantity = this.vendingMachine.getProducts()[ idx ].quantity;
             if (targetQuantity <= 0) {
+                // eslint-disable-next-line no-param-reassign
                 button.disabled = true;
             }
             button.addEventListener('click', () => {
@@ -48,7 +56,7 @@ export class View {
         const chargedBalance = $(SELECTOR.PURCHASE_CHARGE_INPUT);
         $(SELECTOR.PURCHASE_CHARGE_BUTTON).onclick = () => {
             callback(chargedBalance.valueAsNumber);
-            this.renderUserBalance(this.vendingMachine.userBalance.amount);
+            this.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
             clearInput(SELECTOR.PURCHASE_CHARGE_INPUT);
         }
         
@@ -61,7 +69,7 @@ export class View {
             const quantity = $(SELECTOR.PRODUCT_QUANTITY_INPUT).valueAsNumber;
             const newProduct = new Product({ name, price, quantity });
             callback(newProduct);
-            this.renderProductList(this.vendingMachine.products);
+            this.renderProductList(this.vendingMachine.getProducts());
             clearInput(SELECTOR.PRODUCT_NAME_INPUT);
             clearInput(SELECTOR.PRODUCT_PRICE_INPUT);
             clearInput(SELECTOR.PRODUCT_QUANTITY_INPUT);
@@ -73,7 +81,7 @@ export class View {
             clearChildNode(SELECTOR.PAGE_AREA);
             renderSection('add-product-form', templates.addProductForm);
             renderSection('added-product-list', templates.addedProductList);
-            this.renderProductList(this.vendingMachine.products);
+            this.renderProductList(this.vendingMachine.getProducts());
             this.registerAddProductButtonHandler(callback);
         });
     }
@@ -83,7 +91,7 @@ export class View {
             clearChildNode(SELECTOR.PAGE_AREA);
             renderSection('charge-coin-form', templates.chargeCoinForm);
             renderSection('charged-coin-list', templates.chargedCoinList);
-            this.renderChargedCoins(this.vendingMachine.returnCoins);
+            this.renderChargedCoins(this.vendingMachine.getMachineCoins());
             this.registerChargeCoinButtonHandler(callback);
         });
     }
@@ -92,7 +100,7 @@ export class View {
         const chargeBalance = $(SELECTOR.COIN_CHARGE_INPUT);
         $(SELECTOR.COIN_CHARGE_BUTTON).addEventListener("click", () => {
             callback(chargeBalance.valueAsNumber);
-            this.renderChargedCoins(this.vendingMachine.returnCoins);
+            this.renderChargedCoins(this.vendingMachine.getMachineCoins());
             clearInput(SELECTOR.COIN_CHARGE_INPUT);
         })
     }
@@ -105,10 +113,9 @@ export class View {
     }
     
     renderChargedCoins(chargedCoins) {
-        $(SELECTOR.COIN_500).innerText = chargedCoins.COIN_500;
-        $(SELECTOR.COIN_100).innerText = chargedCoins.COIN_100;
-        $(SELECTOR.COIN_50).innerText = chargedCoins.COIN_50;
-        $(SELECTOR.COIN_10).innerText = chargedCoins.COIN_10;
+        chargedCoins.map(coin=>{
+            $(SELECTOR[`COIN_${coin.getValue()}`]).innerText = coin.getQuantity();
+        })
     }
     
     renderUserBalance(userBalance) {
@@ -119,6 +126,12 @@ export class View {
         clearClassNode('product-purchase-item');
         products.map((product) => {
             renderTemplate('#purchase-product-table', templates.purchaseProductItem(product));
+        });
+    }
+    
+    renderReturnedCoins(coins) {
+        coins.map(coin=>{
+            $(SELECTOR[`RETURN_${coin.getValue()}`]).innerText = coin.getQuantity();
         });
     }
 }
