@@ -1,6 +1,6 @@
 import { View } from "./view/view.js";
 import { VendingMachine } from "./models/vendingMachine.js";
-import { validEnoughMoney, validMoney, validName, validQuantity } from "./validator.js";
+import { validEnoughMoney, validMoneyInput, validNameInput, validQuantityInput } from "./validator.js";
 
 export class VendingMachineHandler {
     constructor(initialData) {
@@ -24,9 +24,9 @@ export class VendingMachineHandler {
     
     requestAddProduct = (product) => {
         const validResults = [
-            validName(product.name).code,
-            validMoney(product.price).code,
-            validQuantity(product.quantity).code,
+            validNameInput(product.name).code,
+            validMoneyInput(product.price).code,
+            validQuantityInput(product.quantity).code,
         ]
         if (validResults.some(result=>result !=='SUCCESS')){
             this.view.showAlert(validResults.find(result=>result!=="SUCCESS"))
@@ -36,7 +36,7 @@ export class VendingMachineHandler {
     }
     
     requestChargeCoin = (balance) => {
-        const validResult = validMoney(balance);
+        const validResult = validMoneyInput(balance);
         if (validResult.code !== 'SUCCESS'){
             this.view.showAlert(validResult.code);
             return;
@@ -45,7 +45,7 @@ export class VendingMachineHandler {
     }
     
     requestChargeBalance = (balance) => {
-        const validResult = validMoney(balance);
+        const validResult = validMoneyInput(balance);
         if (validResult.code !== 'SUCCESS'){
             this.view.showAlert(validResult.code);
             return;

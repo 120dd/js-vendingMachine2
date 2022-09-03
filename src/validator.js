@@ -1,4 +1,4 @@
-export const validMoney = (balance) => {
+export const validMoneyInput = (balance) => {
     if (Number.isNaN(balance)){
         return {code:'NO_BALANCE'};
     }
@@ -14,7 +14,7 @@ export const validMoney = (balance) => {
     return {code:'SUCCESS'};
 }
 
-export const validQuantity = (quantity) => {
+export const validQuantityInput = (quantity) => {
     if (Number.isNaN(quantity)){
         return {code:'NO_QUANTITY'};
     }
@@ -24,7 +24,7 @@ export const validQuantity = (quantity) => {
     return {code:'SUCCESS'};
 }
 
-export const validName = (name) => {
+export const validNameInput = (name) => {
     if (name.trim() === ''){
         return {code:'NO_NAME'};
     }
