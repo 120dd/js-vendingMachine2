@@ -45,7 +45,7 @@ export class VendingMachine {
     
     #changeMachineCoinQuantity(value, quantity) {
         const idx = this.#machineCoins.findIndex(coin => coin.getValue() === value);
-        this.#machineCoins[ idx ].changeQuantity(quantity);
+        this.#machineCoins[ idx ].addQuantity(quantity);
     }
     
     getMachineCoinQuantity(value) {
@@ -68,7 +68,7 @@ export class VendingMachine {
     returnCoins() {
         let remainBalance = this.#userBalance.quantity;
         this.#returnCoins.forEach((coin) => {
-            coin.changeQuantity(this.#getReturnedCoin(remainBalance, coin.getValue()));
+            coin.addQuantity(this.#getReturnedCoin(remainBalance, coin.getValue()));
             remainBalance -= coin.getQuantity() * coin.getValue();
             this.#changeMachineCoinQuantity(coin.getValue(), coin.getQuantity());
         });

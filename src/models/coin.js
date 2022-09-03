@@ -15,7 +15,7 @@ export class Coin {
     
     getQuantity =() => this.#quantity;
     
-    changeQuantity = (quantity) => {
+    addQuantity = (quantity) => {
         this.#quantity += quantity;
         return this.#quantity;
     }
