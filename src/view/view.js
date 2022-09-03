@@ -114,7 +114,7 @@ export class View {
     
     renderChargedCoins(chargedCoins) {
         chargedCoins.map(coin=>{
-            $(SELECTOR[`COIN_${coin.getValue()}`]).innerText = coin.getQuantity();
+            $(SELECTOR[`COIN_${coin.getValue()}`]).innerHTML = `${coin.getQuantity()}개`;
         })
     }
     

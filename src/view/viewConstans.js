@@ -115,7 +115,7 @@ export const templates = {
         <h3>금액 투입</h3>
 	    <input type="number" id="charge-input">
 	    <button id="charge-button">투입하기</button>
-	    <p>투입한 금액: <span id="charge-amount"></span></p>
+	    <p>투입한 금액: <span id="charge-amount"></span>원</p>
     </div>
     `,
     purchaseItemList: `
@@ -159,14 +159,12 @@ export const templates = {
         </table>
     </div>
     `,
-    userBalance: (balance) => `
-    ${balance}원
-    `,
+    userBalance: (balance) => `${balance}`,
     purchaseProductItem: (product) => `
             <tr class="product-purchase-item">
-                <td class="product-purchase-name">${product.name}</td>
-                <td class="product-purchase-price">${product.price}</td>
-                <td class="product-purchase-quantity">${product.quantity}</td>
+                <td class="product-purchase-name" data-product-name=${product.name}>${product.name}</td>
+                <td class="product-purchase-price" data-product-price=${product.price}>${product.price}</td>
+                <td class="product-purchase-quantity" data-product-quantity=${product.quantity}>${product.quantity}</td>
                 <td>
                 <input type="button" class="purchase-button" value="구매하기"/>
                 </td>
