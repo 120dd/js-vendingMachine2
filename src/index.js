@@ -2,7 +2,7 @@ import { VendingMachineHandler } from "./vendingMachineHandler.js";
 import { Product } from "./models/product.js";
 import { Coin } from "./models/coin.js";
 
-const isDevelop = false;
+const isDevelop = true;
 
 const mockData = {
     products: [
