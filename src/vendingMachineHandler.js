@@ -1,5 +1,12 @@
 import { View } from "./view/view.js";
 import { VendingMachine } from "./models/vendingMachine.js";
+import {
+    validEnoughMoney,
+    validMoneyInput,
+    validNameInput,
+    validQuantityInput
+} from "./validator.js";
+import { VALID_CODE_MESSAGES } from "./constans/validConstans.js";
 
 export class VendingMachineHandler {
     constructor(initialData) {
@@ -22,21 +29,47 @@ export class VendingMachineHandler {
     }
     
     requestAddProduct = (product) => {
+        const validResults = [
+            validNameInput(product.name).code,
+            validMoneyInput(product.price).code,
+            validQuantityInput(product.quantity).code,
+        ]
+        const errors = validResults.filter(result => result !== VALID_CODE_MESSAGES.SUCCESS);
+        if (errors.length !== 0) {
+            this.view.showAlert(errors[ 0 ]);
+            return;
+        }
         this.vendingMachine.addProduct(product);
     }
     
     requestChargeCoin = (balance) => {
-        this.vendingMachine.addMachineCoin(balance);
+        if (this.alertIfNotSuccess(validMoneyInput(balance).code)) {
+            this.vendingMachine.addMachineCoin(balance);
+        }
     }
     
     requestChargeBalance = (balance) => {
-        this.vendingMachine.addUserBalance(balance);
+        if (this.alertIfNotSuccess(validMoneyInput(balance).code)) {
+            this.vendingMachine.addUserBalance(balance);
+        }
     }
     
     requestPurchaseProduct = (idx) => {
-        this.vendingMachine.purchaseProduct(idx);
-        this.view.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
-        this.view.renderPurchaseProductList(this.vendingMachine.getProducts());
-        this.view.registerPurchaseButtonHandler(this.requestPurchaseProduct);
+        const productPrice = this.vendingMachine.getProduct(idx).price;
+        const userBalance = this.vendingMachine.getUserBalanceQuantity();
+        if (this.alertIfNotSuccess(validEnoughMoney(productPrice, userBalance).code)) {
+            this.vendingMachine.purchaseProduct(idx);
+            this.view.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
+            this.view.renderPurchaseProductList(this.vendingMachine.getProducts());
+            this.view.registerPurchaseButtonHandler(this.requestPurchaseProduct);
+        }
+    }
+    
+    alertIfNotSuccess(result) {
+        if (result !== VALID_CODE_MESSAGES.SUCCESS) {
+            this.view.showAlert(result);
+            return false;
+        }
+        return true;
     }
 }

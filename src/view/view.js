@@ -114,7 +114,7 @@ export class View {
     
     renderChargedCoins(chargedCoins) {
         chargedCoins.map(coin=>{
-            $(SELECTOR[`COIN_${coin.getValue()}`]).innerText = coin.getQuantity();
+            $(SELECTOR[`COIN_${coin.getValue()}`]).innerHTML = `${coin.getQuantity()}개`;
         })
     }
     
@@ -133,5 +133,9 @@ export class View {
         coins.map(coin=>{
             $(SELECTOR[`RETURN_${coin.getValue()}`]).innerText = coin.getQuantity();
         });
+    }
+    
+    showAlert(msg){
+        alert(msg);
     }
 }
