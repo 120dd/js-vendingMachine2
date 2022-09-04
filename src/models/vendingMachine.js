@@ -14,7 +14,7 @@ export class VendingMachine {
         if (VendingMachine.instance) {
             return VendingMachine.instance;
         }
-        this.#products = initialData.products;
+        this.#setProducts(initialData.products);
         VendingMachine.instance = this;
         this.#machineCoins = initialData.machineCoins;
         this.#userBalance = initialData.userBalance;
@@ -70,16 +70,18 @@ export class VendingMachine {
         this.#returnCoins.forEach((coin) => {
             coin.addQuantity(this.#getReturnedCoin(remainBalance, coin.getValue()));
             remainBalance -= coin.getQuantity() * coin.getValue();
-            this.#changeMachineCoinQuantity(coin.getValue(), -coin.getQuantity());
+            this.#changeMachineCoinQuantity(coin.getValue(), - coin.getQuantity());
         });
-        this.setUserBalance(remainBalance, '원');
+        this.setUserBalance(remainBalance);
     }
     
     getProducts = () => this.#products;
     
-    getProduct = (idx) => this.#products[idx];
+    getProduct = (idx) => this.#products[ idx ];
     
     getMachineCoins = () => this.#machineCoins;
+    
+    getUserBalance = () => this.#userBalance;
     
     #getReturnedCoin(balance, faceValue) {
         return Math.min(Math.floor(balance / faceValue), this.getMachineCoinQuantity(faceValue));
@@ -89,9 +91,8 @@ export class VendingMachine {
         this.#products = newProducts;
     }
     
-    setUserBalance(quantity, currency) {
+    setUserBalance(quantity) {
         this.#userBalance.quantity = quantity;
-        this.#userBalance.currency = currency;
     }
     
     changeUserBalance(balance) {
@@ -105,8 +106,14 @@ export class VendingMachine {
     getReturnCoins = () => this.#returnCoins;
     
     resetReturnCoins() {
-        this.#returnCoins.forEach(coin=>{
+        this.#returnCoins.forEach(coin => {
             coin.setQuantity(0);
         })
     }
+    
+    // getVendingMachineData = () => ({
+    //     products: this.#products,
+    //     userBalance: this.#userBalance,
+    //     machineCoins:this.#machineCoins,
+    // });
 }

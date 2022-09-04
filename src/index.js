@@ -1,8 +1,16 @@
 import { VendingMachineHandler } from "./vendingMachineHandler.js";
 import { Product } from "./models/product.js";
 import { Coin } from "./models/coin.js";
+import { LocalDataPersister } from "./localDataPersister.js";
+import {
+    convertListToCoinsObj,
+    convertListToProductObj,
+    convertListToUserBalanceObj
+} from "./utils/utils.js";
 
-const isDevelop = true;
+const isDevelop = false;
+
+const dataPersister = new LocalDataPersister();
 
 const mockData = {
     products: [
@@ -21,18 +29,14 @@ const mockData = {
     }
 }
 
+const productData = dataPersister.getData('products');
+const machineCoinsData = dataPersister.getData('machineCoins');
+const userBalanceData = dataPersister.getData('userBalance');
+
 const deployData = {
-    products: [],
-    machineCoins: [
-        new Coin({value:500,currency:'원',quantity:0}),
-        new Coin({value:100,currency:'원',quantity:0}),
-        new Coin({value:50,currency:'원',quantity:0}),
-        new Coin({value:10,currency:'원',quantity:0}),
-    ],
-    userBalance:{
-        quantity:0,
-        currency:'원'
-    }
+    products: convertListToProductObj(productData),
+    machineCoins: convertListToCoinsObj(machineCoinsData),
+    userBalance:convertListToUserBalanceObj(userBalanceData)
 }
 
 const initialData = isDevelop ? mockData : deployData;
