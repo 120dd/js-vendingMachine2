@@ -43,13 +43,13 @@ export class VendingMachineHandler {
     }
     
     requestChargeCoin = (balance) => {
-        if (this.isValidation(validMoneyInput(balance).code)) {
+        if (this.alertIfNotSuccess(validMoneyInput(balance).code)) {
             this.vendingMachine.addMachineCoin(balance);
         }
     }
     
     requestChargeBalance = (balance) => {
-        if (this.isValidation(validMoneyInput(balance).code)) {
+        if (this.alertIfNotSuccess(validMoneyInput(balance).code)) {
             this.vendingMachine.addUserBalance(balance);
         }
     }
@@ -57,7 +57,7 @@ export class VendingMachineHandler {
     requestPurchaseProduct = (idx) => {
         const productPrice = this.vendingMachine.getProduct(idx).price;
         const userBalance = this.vendingMachine.getUserBalanceQuantity();
-        if (this.isValidation(validEnoughMoney(productPrice, userBalance).code)) {
+        if (this.alertIfNotSuccess(validEnoughMoney(productPrice, userBalance).code)) {
             this.vendingMachine.purchaseProduct(idx);
             this.view.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
             this.view.renderPurchaseProductList(this.vendingMachine.getProducts());
@@ -65,7 +65,7 @@ export class VendingMachineHandler {
         }
     }
     
-    isValidation(result) {
+    alertIfNotSuccess(result) {
         if (result !== VALID_CODE_MESSAGES.SUCCESS) {
             this.view.showAlert(result);
             return false;
