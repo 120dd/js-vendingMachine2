@@ -2,12 +2,12 @@ import { LocalDataPersister } from "./localDataPersister.js";
 import { Product } from "../models/product.js";
 import { Coin } from "../models/coin.js";
 
-export class VendingMachinePersister extends LocalDataPersister{
+export class VendingMachinePersister{
     constructor() {
-        super();
-        this.productData = super.getData('products');
-        this.machineCoinsData = super.getData('machineCoins');
-        this.userBalanceData = super.getData('userBalance');
+        this.dataPersister = new LocalDataPersister();
+        this.productData = this.dataPersister.getData('products');
+        this.machineCoinsData = this.dataPersister.getData('machineCoins');
+        this.userBalanceData = this.dataPersister.getData('userBalance');
     }
     
     convertListToProductObj = (list) => {
