@@ -1,11 +1,12 @@
 import { VendingMachineHandler } from "./vendingMachineHandler.js";
 import { Product } from "./models/product.js";
 import { Coin } from "./models/coin.js";
-import { VendingMachinePersister } from "./persisters/vendingMachinePersister.js";
+import { VendingMachineDataStore } from "./persisters/vendingMachineDataStore.js";
+import { LocalDataPersister } from "./persisters/localDataPersister.js";
 
 const isDevelop = false;
 
-const vendingMachinePersister = new VendingMachinePersister();
+const vendingMachineDataStore = new VendingMachineDataStore(new LocalDataPersister());
 
 const mockData = {
     products: [
@@ -24,8 +25,8 @@ const mockData = {
     }
 }
 
-const deployData = vendingMachinePersister.getVendingMachineData();
+const deployData = vendingMachineDataStore.getVendingMachineData();
 
 const initialData = isDevelop ? mockData : deployData;
-const vendingMachine = new VendingMachineHandler(initialData);
+const vendingMachine = new VendingMachineHandler(initialData,vendingMachineDataStore);
 

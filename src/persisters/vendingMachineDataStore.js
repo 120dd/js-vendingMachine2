@@ -1,13 +1,28 @@
-import { LocalDataPersister } from "./localDataPersister.js";
 import { Product } from "../models/product.js";
 import { Coin } from "../models/coin.js";
 
-export class VendingMachinePersister{
-    constructor() {
-        this.dataPersister = new LocalDataPersister();
-        this.productData = this.dataPersister.getData('products');
-        this.machineCoinsData = this.dataPersister.getData('machineCoins');
-        this.userBalanceData = this.dataPersister.getData('userBalance');
+export class VendingMachineDataStore {
+    #persister
+    
+    constructor(persister) {
+        this.#persister = persister;
+    }
+    
+    getVendingMachineData(){
+        return {
+            products: this.convertListToProductObj(this.loadData('products')),
+            machineCoins: this.convertListToCoinsObj(this.loadData('machineCoins')),
+            userBalance: this.convertListToUserBalanceObj(this.loadData('userBalance')),
+            returnCoins: this.convertListToCoinsObj(null),
+        }
+    }
+    
+    loadData(key){
+        return this.#persister.getData(key);
+    }
+    
+    saveData(key,value){
+        this.#persister.setData(key,value);
     }
     
     convertListToProductObj = (list) => {
@@ -47,13 +62,5 @@ export class VendingMachinePersister{
         }
         userBalance.quantity = list.quantity;
         return userBalance;
-    }
-    
-    getVendingMachineData(){
-        return {
-            products: this.convertListToProductObj(this.productData),
-            machineCoins: this.convertListToCoinsObj(this.machineCoinsData),
-            userBalance: this.convertListToUserBalanceObj(this.userBalanceData)
-        }
     }
 }

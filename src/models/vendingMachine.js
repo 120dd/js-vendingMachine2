@@ -1,5 +1,4 @@
 import { pickRandomNumberInList } from "../utils/utils.js";
-import { Coin } from "./coin.js";
 
 export class VendingMachine {
     #userBalance;
@@ -18,12 +17,7 @@ export class VendingMachine {
         VendingMachine.instance = this;
         this.#machineCoins = initialData.machineCoins;
         this.#userBalance = initialData.userBalance;
-        this.#returnCoins = [
-            new Coin({ value: 500, currency: '원', quantity: 0 }),
-            new Coin({ value: 100, currency: '원', quantity: 0 }),
-            new Coin({ value: 50, currency: '원', quantity: 0 }),
-            new Coin({ value: 10, currency: '원', quantity: 0 }),
-        ]
+        this.#returnCoins = initialData.returnCoins;
     }
     
     addProduct(product) {
