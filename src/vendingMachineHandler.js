@@ -7,7 +7,7 @@ import {
     validQuantityInput
 } from "./validator.js";
 import { VALID_CODE_MESSAGES } from "./constans/validConstans.js";
-import { LocalDataPersister } from "./localDataPersister.js";
+import { LocalDataPersister } from "./persisters/localDataPersister.js";
 
 export class VendingMachineHandler {
     constructor(initialData) {

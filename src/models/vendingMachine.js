@@ -110,10 +110,4 @@ export class VendingMachine {
             coin.setQuantity(0);
         })
     }
-    
-    // getVendingMachineData = () => ({
-    //     products: this.#products,
-    //     userBalance: this.#userBalance,
-    //     machineCoins:this.#machineCoins,
-    // });
 }
