@@ -1,5 +1,6 @@
 import { Product } from "../models/product.js";
 import { Coin } from "../models/coin.js";
+import { COIN_VALUES } from "../constans/validConstans.js";
 
 export class VendingMachineDataStore {
     #persister
@@ -37,12 +38,10 @@ export class VendingMachineDataStore {
     }
     
     convertListToCoinsObj = (list) => {
-        const coins = [
-            new Coin({value:500,currency:'원',quantity:0}),
-            new Coin({value:100,currency:'원',quantity:0}),
-            new Coin({value:50,currency:'원',quantity:0}),
-            new Coin({value:10,currency:'원',quantity:0}),
-        ]
+        const coins = [];
+        COIN_VALUES.forEach(coinValue=>{
+            coins.push(new Coin({value:coinValue,currency:'원',quantity:0}));
+        })
         if (list === null){
             return coins;
         }
