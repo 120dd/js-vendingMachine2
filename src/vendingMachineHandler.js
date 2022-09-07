@@ -9,7 +9,8 @@ import {
 import { VALID_CODE_MESSAGES } from "./constans/validConstans.js";
 
 export class VendingMachineHandler {
-    constructor(initialData) {
+    constructor(initialData,store) {
+        this.vendingMachineStore = store;
         this.vendingMachine = new VendingMachine(initialData);
         this.view = new View();
         this.view.registerProductPageButtonHandler(this.requestAddProduct);
@@ -25,6 +26,7 @@ export class VendingMachineHandler {
         this.vendingMachine.returnCoins();
         this.view.renderReturnedCoins(this.vendingMachine.getReturnCoins());
         this.view.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
+        this.vendingMachineStore.saveData('userBalance',this.vendingMachine.getUserBalance());
         this.vendingMachine.resetReturnCoins();
     }
     
@@ -40,17 +42,20 @@ export class VendingMachineHandler {
             return;
         }
         this.vendingMachine.addProduct(product);
+        this.vendingMachineStore.saveData('products',this.vendingMachine.getProducts());
     }
     
     requestChargeCoin = (balance) => {
         if (this.alertIfNotSuccess(validMoneyInput(balance).code)) {
             this.vendingMachine.addMachineCoin(balance);
+            this.vendingMachineStore.saveData('machineCoins',this.vendingMachine.getMachineCoins());
         }
     }
     
     requestChargeBalance = (balance) => {
         if (this.alertIfNotSuccess(validMoneyInput(balance).code)) {
             this.vendingMachine.addUserBalance(balance);
+            this.vendingMachineStore.saveData('userBalance',this.vendingMachine.getUserBalance());
         }
     }
     
@@ -62,6 +67,9 @@ export class VendingMachineHandler {
             this.view.renderUserBalance(this.vendingMachine.getUserBalanceQuantity());
             this.view.renderPurchaseProductList(this.vendingMachine.getProducts());
             this.view.registerPurchaseButtonHandler(this.requestPurchaseProduct);
+            this.vendingMachineStore.saveData('products',this.vendingMachine.getProducts());
+            this.vendingMachineStore.saveData('machineCoins',this.vendingMachine.getMachineCoins());
+            this.vendingMachineStore.saveData('userBalance',this.vendingMachine.getUserBalance());
         }
     }
     

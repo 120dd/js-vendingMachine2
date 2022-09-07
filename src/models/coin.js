@@ -1,26 +1,20 @@
 export class Coin {
-    #currency;
-    
-    #quantity;
-    
-    #value;
-    
     constructor({ currency, quantity, value }) {
-        this.#quantity = quantity;
-        this.#value = value
-        this.#currency = currency;
+        this.quantity = quantity;
+        this.value = value
+        this.currency = currency;
     }
     
-    getValue = () => this.#value;
+    getValue = () => this.value;
     
-    getQuantity =() => this.#quantity;
+    getQuantity =() => this.quantity;
     
     addQuantity = (quantity) => {
-        this.#quantity += quantity;
-        return this.#quantity;
+        this.quantity += quantity;
+        return this.quantity;
     }
     
     setQuantity = (newQuantity) => {
-        this.#quantity = newQuantity;
+        this.quantity = newQuantity;
     }
 }

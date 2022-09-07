@@ -1,8 +1,12 @@
 import { VendingMachineHandler } from "./vendingMachineHandler.js";
 import { Product } from "./models/product.js";
 import { Coin } from "./models/coin.js";
+import { VendingMachineDataStore } from "./persisters/vendingMachineDataStore.js";
+import { LocalDataPersister } from "./persisters/localDataPersister.js";
 
-const isDevelop = true;
+const isDevelop = false;
+
+const vendingMachineDataStore = new VendingMachineDataStore(new LocalDataPersister());
 
 const mockData = {
     products: [
@@ -21,20 +25,8 @@ const mockData = {
     }
 }
 
-const deployData = {
-    products: [],
-    machineCoins: [
-        new Coin({value:500,currency:'원',quantity:0}),
-        new Coin({value:100,currency:'원',quantity:0}),
-        new Coin({value:50,currency:'원',quantity:0}),
-        new Coin({value:10,currency:'원',quantity:0}),
-    ],
-    userBalance:{
-        quantity:0,
-        currency:'원'
-    }
-}
+const deployData = vendingMachineDataStore.getVendingMachineData();
 
 const initialData = isDevelop ? mockData : deployData;
-const vendingMachine = new VendingMachineHandler(initialData);
+const vendingMachine = new VendingMachineHandler(initialData,vendingMachineDataStore);
 
